@@ -48,7 +48,7 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
     private static final Logger log = LoggerFactory.getLogger(RMRecommenderIRStatsEvaluator.class);
 
     private static final double LOG2 = Math.log(2.0);
-
+    Map<Integer,Integer> counter;
     /**
      * Pass as "relevanceThreshold" argument to
      * {@link #evaluate(RecommenderBuilder, DataModelBuilder, DataModel, IDRescorer, int, double, double)} to
@@ -78,6 +78,7 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
                                  double relevanceThreshold,
                                  double evaluationPercentage) throws TasteException {
 
+    	counter=new HashMap<>();
         Preconditions.checkArgument(recommenderBuilder != null, "recommenderBuilder is null");
         Preconditions.checkArgument(dataModel != null, "dataModel is null");
         Preconditions.checkArgument(at >= 1, "at must be at least 1");
@@ -136,10 +137,10 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
                 continue;
             }
 
-            Recommender recommender = recommenderBuilder.buildRecommender(trainingModel);
+            RMRecommender recommender = (RMRecommender) recommenderBuilder.buildRecommender(trainingModel);
 
             int intersectionSize = 0;
-            List<RecommendedItem> recommendedItems = recommender.recommend(userID, at, rescorer);
+            List<RecommendedItem> recommendedItems = recommender.recommend(userID, at, rescorer,counter);
             for (RecommendedItem recommendedItem : recommendedItems) {
                 if (relevantItemIDs.contains(recommendedItem.getItemID())) {
                     intersectionSize++;

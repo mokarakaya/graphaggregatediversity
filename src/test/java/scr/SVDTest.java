@@ -71,9 +71,9 @@ public class SVDTest
 				public Recommender buildRecommender(DataModel dataModel)
 						throws TasteException {
 					
-			        int numFeatures=10;
-			        float lambda=new Float(0.01);
-			        int numEpochs=3;
+			        int numFeatures=40;
+			        float lambda=new Float(0.003);
+			        int numEpochs=20;
 					ParallelSGDFactorizer factorizer=new ParallelSGDFactorizer(dataModel, numFeatures, lambda, numEpochs);
 			        SVDRecommender recommender =new SVDRecommender(dataModel,factorizer,new AllUnknownItemsCandidateItemsStrategy());
 			        RMRecommender rmRecommender= new RMRecommender(recommender,threshold);
