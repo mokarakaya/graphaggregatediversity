@@ -1,11 +1,14 @@
 package scr.ratingManipulation;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.mahout.cf.taste.common.NoSuchUserException;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.eval.DataModelBuilder;
@@ -23,7 +26,9 @@ import org.apache.mahout.cf.taste.impl.common.RunningAverageAndStdDev;
 import org.apache.mahout.cf.taste.impl.eval.GenericRelevantItemsDataSplitter;
 import org.apache.mahout.cf.taste.impl.eval.IRStatisticsImpl;
 import org.apache.mahout.cf.taste.impl.model.GenericDataModel;
+import org.apache.mahout.cf.taste.impl.model.GenericUserPreferenceArray;
 import org.apache.mahout.cf.taste.model.DataModel;
+import org.apache.mahout.cf.taste.model.Preference;
 import org.apache.mahout.cf.taste.model.PreferenceArray;
 import org.apache.mahout.cf.taste.recommender.IDRescorer;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
@@ -69,14 +74,13 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
         this.dataSplitter = dataSplitter;
     }
 
-    @Override
     public RMIRStatistics evaluate(RecommenderBuilder recommenderBuilder,
                                  DataModelBuilder dataModelBuilder,
                                  DataModel dataModel,
                                  IDRescorer rescorer,
                                  int at,
                                  double relevanceThreshold,
-                                 double evaluationPercentage) throws TasteException {
+                                 double evaluationPercentage, FastByIDMap<PreferenceArray> trainingPrefs, FastByIDMap<PreferenceArray> testPrefs) throws TasteException {
 
     	counter=new HashMap<>();
         Preconditions.checkArgument(recommenderBuilder != null, "recommenderBuilder is null");
@@ -85,145 +89,124 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
         Preconditions.checkArgument(evaluationPercentage > 0.0 && evaluationPercentage <= 1.0,
                 "Invalid evaluationPercentage: %s", evaluationPercentage);
 
-        int numItems = dataModel.getNumItems();
-        RunningAverage precision = new FullRunningAverage();
+        double precisionIntersection = 0;
+        double precisionAll = 0;
         RunningAverage recall = new FullRunningAverage();
         RunningAverage fallOut = new FullRunningAverage();
         RunningAverage nDCG = new FullRunningAverage();
         int numUsersRecommendedFor = 0;
         int numUsersWithRecommendations = 0;
-        Map<Long,Integer>aggregateDiversityMap= new HashMap<>(); 
+       
+        Map<Long,Integer>aggregateDiversityMap= new HashMap<>();
+        DataModel trainingDataModel = new GenericDataModel(trainingPrefs);
+        DataModel testDataModel = new GenericDataModel(testPrefs);
+        RMRecommender recommender = (RMRecommender) recommenderBuilder.buildRecommender(trainingDataModel);
+        LongPrimitiveIterator ite = testDataModel.getUserIDs();
+        while (ite.hasNext()) {
 
-        LongPrimitiveIterator it = dataModel.getUserIDs();
-        while (it.hasNext()) {
+            long userID = ite.nextLong();
 
-            long userID = it.nextLong();
+            
+            
+            
+            
+//            PreferenceArray prefs = dataModel.getPreferencesFromUser(userID);
 
-            if (random.nextDouble() >= evaluationPercentage) {
-                // Skipped
-                continue;
-            }
-
+//            // List some most-preferred items that would count as (most) "relevant" results
+//            double theRelevanceThreshold = Double.isNaN(relevanceThreshold) ? computeThreshold(prefs) : relevanceThreshold;
+//            FastIDSet relevantItemIDs = dataSplitter.getRelevantItemsIDs(userID, at, theRelevanceThreshold, dataModel);
+//
+//            int numRelevantItems = relevantItemIDs.size();
+//            if (numRelevantItems <= 0) {
+//              continue;
+//            }
+//
+//            try {
+//            	trainingDataModel.getPreferencesFromUser(userID);
+//            } catch (NoSuchUserException nsee) {
+//              continue; // Oops we excluded all prefs for the user -- just move on
+//            }
+//
+//            int size = numRelevantItems + trainingDataModel.getItemIDsFromUser(userID).size();
+//            if (size < 2 * at) {
+//              // Really not enough prefs to meaningfully evaluate this user
+//              continue;
+//            }
+            
+            
+            
+            
+            
+            
+            
+            
             long start = System.currentTimeMillis();
 
-            PreferenceArray prefs = dataModel.getPreferencesFromUser(userID);
-
-            // List some most-preferred items that would count as (most) "relevant" results
-            double theRelevanceThreshold = Double.isNaN(relevanceThreshold) ? computeThreshold(prefs) : relevanceThreshold;
-            FastIDSet relevantItemIDs = dataSplitter.getRelevantItemsIDs(userID, at, theRelevanceThreshold, dataModel);
-
-            int numRelevantItems = relevantItemIDs.size();
-            if (numRelevantItems <= 0) {
-                continue;
-            }
-
-            FastByIDMap<PreferenceArray> trainingUsers = new FastByIDMap<PreferenceArray>(dataModel.getNumUsers());
-            LongPrimitiveIterator it2 = dataModel.getUserIDs();
-            while (it2.hasNext()) {
-                dataSplitter.processOtherUser(userID, relevantItemIDs, trainingUsers, it2.nextLong(), dataModel);
-            }
-
-            DataModel trainingModel = dataModelBuilder == null ? new GenericDataModel(trainingUsers)
-                    : dataModelBuilder.buildDataModel(trainingUsers);
-            try {
-                trainingModel.getPreferencesFromUser(userID);
-            } catch (NoSuchUserException nsee) {
-                continue; // Oops we excluded all prefs for the user -- just move on
-            }
-
-            int size = numRelevantItems + trainingModel.getItemIDsFromUser(userID).size();
-            if (size < 2 * at) {
-                // Really not enough prefs to meaningfully evaluate this user
-                continue;
-            }
-
-            RMRecommender recommender = (RMRecommender) recommenderBuilder.buildRecommender(trainingModel);
-
+            PreferenceArray testPreferencesFromUser = testDataModel.getPreferencesFromUser(userID);
             int intersectionSize = 0;
             List<RecommendedItem> recommendedItems = recommender.recommend(userID, at, rescorer,counter);
             for (RecommendedItem recommendedItem : recommendedItems) {
-                if (relevantItemIDs.contains(recommendedItem.getItemID())) {
-                    intersectionSize++;
-                }
-                aggregateDiversityMap.put(recommendedItem.getItemID(), 1);
+            	aggregateDiversityMap.put(recommendedItem.getItemID(), 1);
+            	Iterator<Preference> iterator = testPreferencesFromUser.iterator();
+            	while(iterator.hasNext()){
+            		Preference next = iterator.next();
+            		if(next.getItemID()==recommendedItem.getItemID()){
+            			if(next.getValue()>=4.5){
+            				intersectionSize++;		
+            			}
+            		}
+            	}
             }
 
             int numRecommendedItems = recommendedItems.size();
 
             // Precision
             if (numRecommendedItems > 0) {
-                precision.addDatum((double) intersectionSize / (double) numRecommendedItems);
-            }
-
-            // Recall
-            recall.addDatum((double) intersectionSize / (double) numRelevantItems);
-
-            // Fall-out
-            if (numRelevantItems < size) {
-                fallOut.addDatum((double) (numRecommendedItems - intersectionSize)
-                        / (double) (numItems - numRelevantItems));
-            }
-
-            // nDCG
-            // In computing, assume relevant IDs have relevance 1 and others 0
-            double cumulativeGain = 0.0;
-            double idealizedGain = 0.0;
-            for (int i = 0; i < numRecommendedItems; i++) {
-                RecommendedItem item = recommendedItems.get(i);
-                double discount = 1.0 / log2(i + 2.0); // Classical formulation says log(i+1), but i is 0-based here
-                if (relevantItemIDs.contains(item.getItemID())) {
-                    cumulativeGain += discount;
-                }
-                // otherwise we're multiplying discount by relevance 0 so it doesn't do anything
-
-                // Ideally results would be ordered with all relevant ones first, so this theoretical
-                // ideal list starts with number of relevant items equal to the total number of relevant items
-                if (i < numRelevantItems) {
-                    idealizedGain += discount;
-                }
-            }
-            if (idealizedGain > 0.0) {
-                nDCG.addDatum(cumulativeGain / idealizedGain);
-            }
-
-            // Reach
-            numUsersRecommendedFor++;
-            if (numRecommendedItems > 0) {
-                numUsersWithRecommendations++;
+                precisionAll+=numRecommendedItems;
+                precisionIntersection+=intersectionSize;
             }
 
             long end = System.currentTimeMillis();
 
             log.info("Evaluated with user {} in {}ms", userID, end - start);
             log.info("Precision/recall/fall-out/nDCG/reach: {} / {} / {} / {} / {}",
-                    precision.getAverage(), recall.getAverage(), fallOut.getAverage(), nDCG.getAverage(),
+                    precisionIntersection/precisionAll, recall.getAverage(), fallOut.getAverage(), nDCG.getAverage(),
                     (double) numUsersWithRecommendations / (double) numUsersRecommendedFor);
         }
 
         return new RMIRStatisticsImpl(
-                precision.getAverage(),
+        		precisionIntersection/precisionAll,
                 recall.getAverage(),
                 fallOut.getAverage(),
                 nDCG.getAverage(),
                 (double) numUsersWithRecommendations / (double) numUsersRecommendedFor,
                 aggregateDiversityMap.size());
     }
-
+    
+   
+    
     private static double computeThreshold(PreferenceArray prefs) {
         if (prefs.length() < 2) {
-            // Not enough data points -- return a threshold that allows everything
-            return Double.NEGATIVE_INFINITY;
+          // Not enough data points -- return a threshold that allows everything
+          return Double.NEGATIVE_INFINITY;
         }
         RunningAverageAndStdDev stdDev = new FullRunningAverageAndStdDev();
         int size = prefs.length();
         for (int i = 0; i < size; i++) {
-            stdDev.addDatum(prefs.getValue(i));
+          stdDev.addDatum(prefs.getValue(i));
         }
         return stdDev.getAverage() + stdDev.getStandardDeviation();
-    }
+      }
 
-    private static double log2(double value) {
+      private static double log2(double value) {
         return Math.log(value) / LOG2;
-    }
+      }
 
+	@Override
+	public IRStatistics evaluate(RecommenderBuilder recommenderBuilder,
+			DataModelBuilder dataModelBuilder, DataModel dataModel,
+			IDRescorer rescorer, int at, double relevanceThreshold,
+			double evaluationPercentage) throws TasteException {
+		throw new NotImplementedException();
+	}
 }
