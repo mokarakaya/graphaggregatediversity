@@ -1,15 +1,12 @@
 package scr.ratingManipulation;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import org.apache.commons.lang.NotImplementedException;
-import org.apache.mahout.cf.taste.common.NoSuchUserException;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.eval.DataModelBuilder;
 import org.apache.mahout.cf.taste.eval.IRStatistics;
@@ -17,23 +14,17 @@ import org.apache.mahout.cf.taste.eval.RecommenderBuilder;
 import org.apache.mahout.cf.taste.eval.RecommenderIRStatsEvaluator;
 import org.apache.mahout.cf.taste.eval.RelevantItemsDataSplitter;
 import org.apache.mahout.cf.taste.impl.common.FastByIDMap;
-import org.apache.mahout.cf.taste.impl.common.FastIDSet;
 import org.apache.mahout.cf.taste.impl.common.FullRunningAverage;
-import org.apache.mahout.cf.taste.impl.common.FullRunningAverageAndStdDev;
 import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.common.RunningAverage;
-import org.apache.mahout.cf.taste.impl.common.RunningAverageAndStdDev;
 import org.apache.mahout.cf.taste.impl.eval.GenericRelevantItemsDataSplitter;
-import org.apache.mahout.cf.taste.impl.eval.IRStatisticsImpl;
 import org.apache.mahout.cf.taste.impl.model.GenericDataModel;
-import org.apache.mahout.cf.taste.impl.model.GenericUserPreferenceArray;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.model.Preference;
 import org.apache.mahout.cf.taste.model.PreferenceArray;
 import org.apache.mahout.cf.taste.recommender.IDRescorer;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.Recommender;
-import org.apache.mahout.common.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,8 +43,6 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
 
     private static final Logger log = LoggerFactory.getLogger(RMRecommenderIRStatsEvaluator.class);
 
-    private static final double LOG2 = Math.log(2.0);
-
     /**
      * Pass as "relevanceThreshold" argument to
      * {@link #evaluate(RecommenderBuilder, DataModelBuilder, DataModel, IDRescorer, int, double, double)} to
@@ -61,8 +50,6 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
      */
     public static final double CHOOSE_THRESHOLD = Double.NaN;
 
-    private final Random random;
-    private final RelevantItemsDataSplitter dataSplitter;
 
     public RMRecommenderIRStatsEvaluator() {
         this(new GenericRelevantItemsDataSplitter());
@@ -70,8 +57,6 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
 
     public RMRecommenderIRStatsEvaluator(RelevantItemsDataSplitter dataSplitter) {
         Preconditions.checkNotNull(dataSplitter);
-        random = RandomUtils.getRandom();
-        this.dataSplitter = dataSplitter;
     }
 
     public RMIRStatistics evaluate(RecommenderBuilder recommenderBuilder,
@@ -99,7 +84,7 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
         Map<Long,Integer>aggregateDiversityMap= new HashMap<>();
         DataModel trainingDataModel = new GenericDataModel(trainingPrefs);
         DataModel testDataModel = new GenericDataModel(testPrefs);
-        RMRecommender recommender = (RMRecommender) recommenderBuilder.buildRecommender(trainingDataModel);
+        Recommender recommender = recommenderBuilder.buildRecommender(trainingDataModel);
         LongPrimitiveIterator ite = testDataModel.getUserIDs();
         while (ite.hasNext()) {
 
@@ -149,25 +134,6 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
                 aggregateDiversityMap.size());
     }
     
-   
-    
-    private static double computeThreshold(PreferenceArray prefs) {
-        if (prefs.length() < 2) {
-          // Not enough data points -- return a threshold that allows everything
-          return Double.NEGATIVE_INFINITY;
-        }
-        RunningAverageAndStdDev stdDev = new FullRunningAverageAndStdDev();
-        int size = prefs.length();
-        for (int i = 0; i < size; i++) {
-          stdDev.addDatum(prefs.getValue(i));
-        }
-        return stdDev.getAverage() + stdDev.getStandardDeviation();
-      }
-
-      private static double log2(double value) {
-        return Math.log(value) / LOG2;
-      }
-
 	@Override
 	public IRStatistics evaluate(RecommenderBuilder recommenderBuilder,
 			DataModelBuilder dataModelBuilder, DataModel dataModel,
