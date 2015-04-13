@@ -113,13 +113,10 @@ public class SVDTest
              Iterator<Preference> iterator = preferencesFromUser.iterator();
              List<Preference> oneUserTrainingPrefs= new ArrayList<>();
              List<Preference> oneUserTestPrefs= new ArrayList<>();
-             boolean hasTestPref=false;
              while(iterator.hasNext()){
              	Preference next = iterator.next();
              	if (random.nextDouble() < evaluationPercentage){
-//             	if (!hasTestPref && next.getValue()>4.5) {
              		oneUserTestPrefs.add(next);
-             		hasTestPref=true;
                  }else{
                 	 oneUserTrainingPrefs.add(next);
                  }            	
