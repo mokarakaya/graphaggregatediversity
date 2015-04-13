@@ -111,7 +111,6 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
             
             
 //            PreferenceArray prefs = dataModel.getPreferencesFromUser(userID);
-
 //            // List some most-preferred items that would count as (most) "relevant" results
 //            double theRelevanceThreshold = Double.isNaN(relevanceThreshold) ? computeThreshold(prefs) : relevanceThreshold;
 //            FastIDSet relevantItemIDs = dataSplitter.getRelevantItemsIDs(userID, at, theRelevanceThreshold, dataModel);
@@ -146,6 +145,13 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
             int intersectionSize = 0;
             List<RecommendedItem> recommendedItems = recommender.recommend(userID, at, rescorer,counter);
             for (RecommendedItem recommendedItem : recommendedItems) {
+
+   			 	Integer recommendationCount= counter.get((int)recommendedItem.getItemID());
+   			 	if(recommendationCount==null){
+   			 		recommendationCount=0;
+   			 	}
+   			 	counter.put((int) recommendedItem.getItemID(), recommendationCount+1);
+   		 
             	aggregateDiversityMap.put(recommendedItem.getItemID(), 1);
             	Iterator<Preference> iterator = testPreferencesFromUser.iterator();
             	while(iterator.hasNext()){
