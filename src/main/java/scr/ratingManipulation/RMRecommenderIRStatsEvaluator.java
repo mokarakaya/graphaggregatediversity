@@ -53,7 +53,7 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
     private static final Logger log = LoggerFactory.getLogger(RMRecommenderIRStatsEvaluator.class);
 
     private static final double LOG2 = Math.log(2.0);
-    Map<Integer,Integer> counter;
+
     /**
      * Pass as "relevanceThreshold" argument to
      * {@link #evaluate(RecommenderBuilder, DataModelBuilder, DataModel, IDRescorer, int, double, double)} to
@@ -82,7 +82,6 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
                                  double relevanceThreshold,
                                  double evaluationPercentage, FastByIDMap<PreferenceArray> trainingPrefs, FastByIDMap<PreferenceArray> testPrefs) throws TasteException {
 
-    	counter=new HashMap<>();
         Preconditions.checkArgument(recommenderBuilder != null, "recommenderBuilder is null");
         Preconditions.checkArgument(dataModel != null, "dataModel is null");
         Preconditions.checkArgument(at >= 1, "at must be at least 1");
@@ -105,53 +104,14 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
         while (ite.hasNext()) {
 
             long userID = ite.nextLong();
-
-            
-            
-            
-            
-//            PreferenceArray prefs = dataModel.getPreferencesFromUser(userID);
-//            // List some most-preferred items that would count as (most) "relevant" results
-//            double theRelevanceThreshold = Double.isNaN(relevanceThreshold) ? computeThreshold(prefs) : relevanceThreshold;
-//            FastIDSet relevantItemIDs = dataSplitter.getRelevantItemsIDs(userID, at, theRelevanceThreshold, dataModel);
-//
-//            int numRelevantItems = relevantItemIDs.size();
-//            if (numRelevantItems <= 0) {
-//              continue;
-//            }
-//
-//            try {
-//            	trainingDataModel.getPreferencesFromUser(userID);
-//            } catch (NoSuchUserException nsee) {
-//              continue; // Oops we excluded all prefs for the user -- just move on
-//            }
-//
-//            int size = numRelevantItems + trainingDataModel.getItemIDsFromUser(userID).size();
-//            if (size < 2 * at) {
-//              // Really not enough prefs to meaningfully evaluate this user
-//              continue;
-//            }
-            
-            
-            
-            
-            
-            
-            
             
             long start = System.currentTimeMillis();
 
             PreferenceArray testPreferencesFromUser = testDataModel.getPreferencesFromUser(userID);
             int intersectionSize = 0;
-            List<RecommendedItem> recommendedItems = recommender.recommend(userID, at, rescorer,counter);
+            List<RecommendedItem> recommendedItems = recommender.recommend(userID, at, rescorer);
             for (RecommendedItem recommendedItem : recommendedItems) {
 
-   			 	Integer recommendationCount= counter.get((int)recommendedItem.getItemID());
-   			 	if(recommendationCount==null){
-   			 		recommendationCount=0;
-   			 	}
-   			 	counter.put((int) recommendedItem.getItemID(), recommendationCount+1);
-   		 
             	aggregateDiversityMap.put(recommendedItem.getItemID(), 1);
             	Iterator<Preference> iterator = testPreferencesFromUser.iterator();
             	while(iterator.hasNext()){
