@@ -72,7 +72,7 @@ public abstract class AbstractTest
 			};
 	        
 			RMRecommenderIRStatsEvaluator evaluator=new RMRecommenderIRStatsEvaluator();
-	        RMIRStatistics evaluate = evaluator.evaluate(builder, null, dataModel, null, 20, 4.5, 0.8,trainingPrefs,testPrefs);
+	        RMIRStatistics evaluate = evaluator.evaluate(builder, null, dataModel, null, 20, 4.5,trainingPrefs,testPrefs);
 	        System.out.println(evaluate.getPrecision()+";"+evaluate.getAggregateDiversity());
     	}
         assertTrue( true );

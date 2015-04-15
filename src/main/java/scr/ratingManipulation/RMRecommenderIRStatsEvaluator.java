@@ -65,13 +65,11 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
                                  IDRescorer rescorer,
                                  int at,
                                  double relevanceThreshold,
-                                 double evaluationPercentage, FastByIDMap<PreferenceArray> trainingPrefs, FastByIDMap<PreferenceArray> testPrefs) throws TasteException {
+                                 FastByIDMap<PreferenceArray> trainingPrefs, FastByIDMap<PreferenceArray> testPrefs) throws TasteException {
 
         Preconditions.checkArgument(recommenderBuilder != null, "recommenderBuilder is null");
         Preconditions.checkArgument(dataModel != null, "dataModel is null");
         Preconditions.checkArgument(at >= 1, "at must be at least 1");
-        Preconditions.checkArgument(evaluationPercentage > 0.0 && evaluationPercentage <= 1.0,
-                "Invalid evaluationPercentage: %s", evaluationPercentage);
 
         double precisionIntersection = 0;
         double precisionAll = 0;
