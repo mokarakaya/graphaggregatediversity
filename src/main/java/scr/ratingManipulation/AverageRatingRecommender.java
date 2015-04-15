@@ -46,7 +46,8 @@ public class AverageRatingRecommender extends AbstractRecommender{
 			 if(recommendedItem.getValue()<threshold ){
 				 break;
 			 }
-			RecommendedItem item=new MutableRecommendedItem(recommendedItem.getItemID(),averageRating.get(recommendedItem.getItemID()));
+			 //multiply by -1 to sort ascending. we should recommend item with least avgRatings first
+			RecommendedItem item=new MutableRecommendedItem(recommendedItem.getItemID(), (-1)*averageRating.get(recommendedItem.getItemID()));
 			aboveTh.add(item);
 		 }
 		
