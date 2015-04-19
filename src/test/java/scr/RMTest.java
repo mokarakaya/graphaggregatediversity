@@ -9,7 +9,7 @@ import scr.ratingManipulation.RMRecommender;
 /**
  * Unit test for RMRecommender.
  */
-public class SVDTest 
+public class RMTest
     extends AbstractTest
 {
 

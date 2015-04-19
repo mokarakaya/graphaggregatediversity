@@ -43,7 +43,7 @@ public class AverageRatingTest
 	 * @throws TasteException
 	 */
 	private Map<Long, Float> getAverageRatingMap(DataModel dataModel) throws TasteException {
-		Map<Long, Float> avgRatingMap=new HashMap<Long, Float>();
+		Map<Long, Float> avgRatingMap=new HashMap<>();
 		LongPrimitiveIterator itemIDs = dataModel.getItemIDs();
 		while(itemIDs.hasNext()){
 			Long next = itemIDs.next();

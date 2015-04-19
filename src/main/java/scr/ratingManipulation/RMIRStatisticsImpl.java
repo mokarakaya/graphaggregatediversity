@@ -17,11 +17,9 @@
 
 package scr.ratingManipulation;
 
-import java.io.Serializable;
-
-import org.apache.mahout.cf.taste.eval.IRStatistics;
-
 import com.google.common.base.Preconditions;
+
+import java.io.Serializable;
 
 public final class RMIRStatisticsImpl implements RMIRStatistics, Serializable {
 
