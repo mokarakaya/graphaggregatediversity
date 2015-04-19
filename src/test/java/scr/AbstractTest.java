@@ -54,7 +54,7 @@ public abstract class AbstractTest
 	        
 	    splitPrefs(evaluationPercentage, dataModel, trainingPrefs, testPrefs);
 	    dataModel=new GenericDataModel(trainingPrefs);
-    	for(double i=0.1;i<=1;i+=0.1){
+    	for(double i=0.1;i<=2;i+=0.1){
     	
     		final double  threshold=i;
 	    	RecommenderBuilder builder = new RecommenderBuilder() {
