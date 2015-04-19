@@ -31,8 +31,10 @@ public final class RMIRStatisticsImpl implements RMIRStatistics, Serializable {
     private final double fallOut;
     private final double ndcg;
     private final double reach;
+    private final double giniDiversity;
 
-    RMIRStatisticsImpl(double precision, double recall, double fallOut, double ndcg, double reach,double aggregateDiversity) {
+    RMIRStatisticsImpl(double precision, double recall, double fallOut, double ndcg, double reach, double aggregateDiversity, double giniDiversity) {
+        this.giniDiversity = giniDiversity;
         Preconditions.checkArgument(Double.isNaN(precision) || (precision >= 0.0 && precision <= 1.0),
                 "Illegal precision: " + precision);
         Preconditions.checkArgument(Double.isNaN(recall) || (recall >= 0.0 && recall <= 1.0), "Illegal recall: " + recall);
@@ -96,4 +98,8 @@ public final class RMIRStatisticsImpl implements RMIRStatistics, Serializable {
 		return aggregateDiversity;
 	}
 
+    @Override
+    public double getGiniDiversity() {
+        return giniDiversity;
+    }
 }

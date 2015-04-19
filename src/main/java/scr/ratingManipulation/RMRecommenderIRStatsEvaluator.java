@@ -1,6 +1,8 @@
 package scr.ratingManipulation;
 
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -29,6 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Preconditions;
+import scr.Math;
 
 /**
  * <p>
@@ -78,58 +81,73 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
         RunningAverage nDCG = new FullRunningAverage();
         int numUsersRecommendedFor = 0;
         int numUsersWithRecommendations = 0;
-       
-        Map<Long,Integer>aggregateDiversityMap= new HashMap<>();
+
+        Map<Long, Integer> aggregateDiversityMap = new HashMap<>();
         DataModel trainingDataModel = new GenericDataModel(trainingPrefs);
         DataModel testDataModel = new GenericDataModel(testPrefs);
         Recommender recommender = recommenderBuilder.buildRecommender(trainingDataModel);
         LongPrimitiveIterator ite = testDataModel.getUserIDs();
+
+        BigDecimal totalGini = new BigDecimal(0);
         while (ite.hasNext()) {
 
             long userID = ite.nextLong();
-            
             long start = System.currentTimeMillis();
 
             PreferenceArray testPreferencesFromUser = testDataModel.getPreferencesFromUser(userID);
             int intersectionSize = 0;
             List<RecommendedItem> recommendedItems = recommender.recommend(userID, at, rescorer);
             for (RecommendedItem recommendedItem : recommendedItems) {
-
-            	aggregateDiversityMap.put(recommendedItem.getItemID(), 1);
-            	Iterator<Preference> iterator = testPreferencesFromUser.iterator();
-            	while(iterator.hasNext()){
-            		Preference next = iterator.next();
-            		if(next.getItemID()==recommendedItem.getItemID()){
-            			if(next.getValue()>=4.5){
-            				intersectionSize++;		
-            			}
-            		}
-            	}
+                if (aggregateDiversityMap.get(recommendedItem.getItemID()) == null) {
+                    aggregateDiversityMap.put(recommendedItem.getItemID(), 1);
+                } else {
+                    aggregateDiversityMap.put(recommendedItem.getItemID(), aggregateDiversityMap.get(recommendedItem.getItemID()) + 1);
+                }
+                Iterator<Preference> iterator = testPreferencesFromUser.iterator();
+                while (iterator.hasNext()) {
+                    Preference next = iterator.next();
+                    if (next.getItemID() == recommendedItem.getItemID()) {
+                        if (next.getValue() >= 4.5) {
+                            intersectionSize++;
+                        }
+                    }
+                }
             }
 
             int numRecommendedItems = recommendedItems.size();
 
             // Precision
             if (numRecommendedItems > 0) {
-                precisionAll+=numRecommendedItems;
-                precisionIntersection+=intersectionSize;
+                precisionAll += numRecommendedItems;
+                precisionIntersection += intersectionSize;
             }
+
 
             long end = System.currentTimeMillis();
 
             log.info("Evaluated with user {} in {}ms", userID, end - start);
             log.info("Precision/recall/fall-out/nDCG/reach: {} / {} / {} / {} / {}",
-                    precisionIntersection/precisionAll, recall.getAverage(), fallOut.getAverage(), nDCG.getAverage(),
+                    precisionIntersection / precisionAll, recall.getAverage(), fallOut.getAverage(), nDCG.getAverage(),
                     (double) numUsersWithRecommendations / (double) numUsersRecommendedFor);
         }
-
+        List<Long> sortedAggregateDiversityList = Math.sortByValueAsc(aggregateDiversityMap);
+        double candidateItems = aggregateDiversityMap.size() + 1;
+        double total=testDataModel.getNumUsers()*at;
+        int count=1;
+        for (Long itemId : sortedAggregateDiversityList) {
+            BigDecimal gini = new BigDecimal((candidateItems - count) / candidateItems);
+            double userCount=aggregateDiversityMap.get(itemId);
+            gini = gini.multiply(new BigDecimal( userCount ).divide(new BigDecimal(total),10, RoundingMode.DOWN));
+            totalGini=totalGini.add(gini);
+            count++;
+        }
         return new RMIRStatisticsImpl(
-        		precisionIntersection/precisionAll,
+                precisionIntersection / precisionAll,
                 recall.getAverage(),
                 fallOut.getAverage(),
                 nDCG.getAverage(),
                 (double) numUsersWithRecommendations / (double) numUsersRecommendedFor,
-                aggregateDiversityMap.size());
+                aggregateDiversityMap.size(), totalGini.multiply(new BigDecimal(2)).doubleValue());
     }
     
 	@Override

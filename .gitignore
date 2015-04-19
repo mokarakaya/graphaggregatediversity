@@ -3,4 +3,6 @@
 .classpath
 .project
 .idea
+main.iml
+test.iml
 research-art.iml
