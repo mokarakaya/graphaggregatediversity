@@ -12,7 +12,20 @@ import scr.ratingManipulation.RMRecommender;
 public class RMTest
     extends AbstractTest
 {
+	@Override
+	double getMinThreshold() {
+		return 0;
+	}
 
+	@Override
+	double getMaxThreshold() {
+		return 2;
+	}
+
+	@Override
+	double getIncThreshold() {
+		return 0.1;
+	}
 	@Override
 	public Recommender getRecommender(SVDRecommender recommender,
 			double threshold) {

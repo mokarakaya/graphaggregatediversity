@@ -42,7 +42,8 @@ class AggDiv {
         ad.run();
     }
     void run() throws Exception {
-        DataModel model = new FileDataModel(new File("c:/development/data/ml-1m/ratings.dat"));
+        //DataModel model = new FileDataModel(new File("c:/development/data/ml-1m/ratings.dat"));
+        DataModel model= new FileDataModel(new File("C:/development/data/bookcrossing/BX-Book-RatingsInt.csv"));
         final AllUnknownItemsCandidateItemsStrategy candidateStrategy = new AllUnknownItemsCandidateItemsStrategy();
         IRStatsEvaluatorAgg evaluator = new IRStatsEvaluatorAgg();
 //        IRStatsEvaluator eval = new IRStatsEvaluator();

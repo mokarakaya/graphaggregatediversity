@@ -32,11 +32,10 @@ import scr.ratingManipulation.RMRecommenderIRStatsEvaluator;
 /**
  * Unit test for simple App.
  */
-public abstract class AbstractTest 
-    extends TestCase
+public abstract class AbstractTest  extends TestCase
 {
 
-    /**
+	/**
      * Rigourous Test :-)
      * @throws IOException 
      * @throws TasteException 
@@ -45,7 +44,11 @@ public abstract class AbstractTest
     {
 
 
-    	DataModel dataModel= new FileDataModel(new File("c:/development/data/ml-1m/ratings.dat"));
+    	//DataModel dataModel= new FileDataModel(new File("c:/development/data/ml-1m/ratings.dat"));
+		//DataModel dataModel= new FileDataModel(new File("C:/development/data/amazonMovies/amazon-movies-tv-1mInt.data"));
+		DataModel dataModel= new FileDataModel(new File("C:/development/data/bookcrossing/BX-Book-RatingsInt50.csv"));
+
+
     	double evaluationPercentage=0.7;
 		FastByIDMap<PreferenceArray> trainingPrefs = new FastByIDMap<>(
 	                1 + (int) (evaluationPercentage * dataModel.getNumUsers()));
@@ -54,18 +57,17 @@ public abstract class AbstractTest
 	        
 	    splitPrefs(evaluationPercentage, dataModel, trainingPrefs, testPrefs);
 	    dataModel=new GenericDataModel(trainingPrefs);
-    	for(double i=0.1;i<=2;i+=0.1){
-    	
+		int numFeatures=100;
+		float lambda=new Float( 0.02);
+		int numEpochs=20;
+		ParallelSGDFactorizer factorizer=new ParallelSGDFactorizer(dataModel, numFeatures, lambda, numEpochs);
+		final SVDRecommender recommender =new SVDRecommender(dataModel,factorizer,new AllUnknownItemsCandidateItemsStrategy());
+    	for(double i=getMinThreshold();i<=getMaxThreshold();i+=getIncThreshold()){
     		final double  threshold=i;
 	    	RecommenderBuilder builder = new RecommenderBuilder() {
 				@Override
 				public Recommender buildRecommender(DataModel dataModel)
 						throws TasteException {
-			        int numFeatures=100;
-			        float lambda=new Float( 0.02);
-			        int numEpochs=20;
-					ParallelSGDFactorizer factorizer=new ParallelSGDFactorizer(dataModel, numFeatures, lambda, numEpochs);
-			        SVDRecommender recommender =new SVDRecommender(dataModel,factorizer,new AllUnknownItemsCandidateItemsStrategy());
 			        Recommender rmRecommender= getRecommender(recommender,threshold);
 					return rmRecommender;
 				}
@@ -77,6 +79,9 @@ public abstract class AbstractTest
     	}
         assertTrue( true );
     }
+	abstract double getMinThreshold();
+	abstract double getMaxThreshold();
+	abstract double getIncThreshold();
     public abstract Recommender getRecommender(SVDRecommender recommender, double threshold) throws TasteException;
     private void splitPrefs(double evaluationPercentage, DataModel dataModel,FastByIDMap<PreferenceArray> trainingPrefs 
     		,FastByIDMap<PreferenceArray> testPrefs ) throws TasteException{

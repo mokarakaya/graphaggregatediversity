@@ -32,10 +32,22 @@ public class AverageRatingTest
 		if(map==null){
 			map=getAverageRatingMap(recommender.getDataModel());
 		}
-		//add 4 to threshold since we need to run this test between 4 and 5
-		return new AverageRatingRecommender(recommender, threshold+4, map);
+		return new AverageRatingRecommender(recommender, threshold, map);
 	}
-	
+	@Override
+	double getMinThreshold() {
+		return 7;
+	}
+
+	@Override
+	double getMaxThreshold() {
+		return 11;
+	}
+
+	@Override
+	double getIncThreshold() {
+		return 0.4;
+	}
 	/**
 	 * return average rating of items
 	 * @param dataModel
