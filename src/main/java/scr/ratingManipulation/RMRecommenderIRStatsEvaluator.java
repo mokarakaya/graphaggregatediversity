@@ -95,6 +95,9 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
             long start = System.currentTimeMillis();
 
             PreferenceArray testPreferencesFromUser = testDataModel.getPreferencesFromUser(userID);
+            if(testPreferencesFromUser.length()<=5){
+                continue;
+            }
             int intersectionSize = 0;
             List<RecommendedItem> recommendedItems = recommender.recommend(userID, at, rescorer);
             for (RecommendedItem recommendedItem : recommendedItems) {

@@ -19,7 +19,7 @@ public class RMTest
 
 	@Override
 	double getMaxThreshold() {
-		return 2;
+		return 1;
 	}
 
 	@Override

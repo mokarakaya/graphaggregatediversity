@@ -25,12 +25,12 @@ public class PopularityTest
 
 	@Override
 	double getMinThreshold() {
-		return 7;
+		return 2;
 	}
 
 	@Override
 	double getMaxThreshold() {
-		return 11;
+		return 10;
 	}
 
 	@Override
