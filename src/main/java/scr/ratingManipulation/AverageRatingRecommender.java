@@ -33,7 +33,7 @@ public class AverageRatingRecommender extends AbstractRecommender{
 	public List<RecommendedItem> recommend(long userID, int howMany,IDRescorer rescorer) throws TasteException {
     	List<RecommendedItem> aboveTh=new ArrayList<>(); 
     	List<RecommendedItem> finalRecommendedItems=new ArrayList<>();
-		List<RecommendedItem> recommend = recommender.recommend(userID, 10000, rescorer);
+		List<RecommendedItem> recommend = recommender.recommend(userID, recommender.getDataModel().getNumItems(), rescorer);
 		for (RecommendedItem recommendedItem : recommend) {
 			 if(recommendedItem.getValue()<threshold ){
 				 break;
