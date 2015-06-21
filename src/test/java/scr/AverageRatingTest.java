@@ -36,17 +36,17 @@ public class AverageRatingTest
 	}
 	@Override
 	double getMinThreshold() {
-		return 2;
+		return 3;
 	}
 
 	@Override
 	double getMaxThreshold() {
-		return 10;
+		return 5.4;
 	}
 
 	@Override
 	double getIncThreshold() {
-		return 0.4;
+		return 0.2;
 	}
 	/**
 	 * return average rating of items

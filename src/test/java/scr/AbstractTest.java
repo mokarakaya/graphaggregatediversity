@@ -46,7 +46,8 @@ public abstract class AbstractTest  extends TestCase
 
     	//DataModel dataModel= new FileDataModel(new File("c:/development/data/ml-1m/ratings.dat"));
 		//DataModel dataModel= new FileDataModel(new File("C:/development/data/amazonMovies/amazon-movies-tv-1mInt.data"));
-		DataModel dataModel= new FileDataModel(new File("C:/development/data/bookcrossing/BX-Book-RatingsInt50.csv"));
+		DataModel dataModel= new FileDataModel(new File("C:/development/data/ymusic.data"));
+		//DataModel dataModel= new FileDataModel(new File("C:/development/data/bookcrossing/BX-Book-RatingsInt500.csv"));
 
 
     	double evaluationPercentage=0.7;

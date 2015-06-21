@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Preconditions;
 import scr.Math;
+import scr.evaulator.GiniEvaluator;
 
 /**
  * <p>
@@ -88,11 +89,9 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
         Recommender recommender = recommenderBuilder.buildRecommender(trainingDataModel);
         LongPrimitiveIterator ite = testDataModel.getUserIDs();
 
-        BigDecimal totalGini = new BigDecimal(0);
         while (ite.hasNext()) {
 
             long userID = ite.nextLong();
-            long start = System.currentTimeMillis();
 
             PreferenceArray testPreferencesFromUser = testDataModel.getPreferencesFromUser(userID);
             if(testPreferencesFromUser.length()<=5){
@@ -124,49 +123,21 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
                 precisionAll += numRecommendedItems;
                 precisionIntersection += intersectionSize;
             }
-
-
-            long end = System.currentTimeMillis();
-
-            log.info("Evaluated with user {} in {}ms", userID, end - start);
-            log.info("Precision/recall/fall-out/nDCG/reach: {} / {} / {} / {} / {}",
-                    precisionIntersection / precisionAll, recall.getAverage(), fallOut.getAverage(), nDCG.getAverage(),
-                    (double) numUsersWithRecommendations / (double) numUsersRecommendedFor);
         }
-
-        Map<Long, Integer> giniDiversityMap=new HashMap<>();
-        LongPrimitiveIterator iterator = dataModel.getItemIDs();
-        while(iterator.hasNext()) {
-            Long itemId = iterator.next();
-            if(aggregateDiversityMap.get(itemId)==null){
-                giniDiversityMap.put(itemId,0);
-            }else{
-                giniDiversityMap.put(itemId,aggregateDiversityMap.get(itemId));
-            }
-        }
-        List<Long> sortedGiniDiversityList = Math.sortByValueAsc(giniDiversityMap);
-        double candidateItems = dataModel.getNumItems() + 1;
-        double total=testDataModel.getNumUsers()*at;
-        int count=1;
-        for(Long itemId:sortedGiniDiversityList) {
-            Integer reci=aggregateDiversityMap.get(itemId);
-            if(reci!=null) {
-                BigDecimal gini = new BigDecimal((candidateItems - count) / candidateItems);
-                gini = gini.multiply(new BigDecimal(reci).divide(new BigDecimal(total), 10, RoundingMode.DOWN));
-                totalGini = totalGini.add(gini);
-            }
-            count++;
-        }
+        GiniEvaluator giniEvaluator= new GiniEvaluator();
+        BigDecimal totalGini = giniEvaluator.getResult(dataModel, at, aggregateDiversityMap, testDataModel);
         return new RMIRStatisticsImpl(
                 precisionIntersection / precisionAll,
                 recall.getAverage(),
                 fallOut.getAverage(),
                 nDCG.getAverage(),
                 (double) numUsersWithRecommendations / (double) numUsersRecommendedFor,
-                aggregateDiversityMap.size(), totalGini.multiply(new BigDecimal(2)).doubleValue());
+                aggregateDiversityMap.size(), totalGini.doubleValue());
     }
-    
-	@Override
+
+
+
+    @Override
 	public IRStatistics evaluate(RecommenderBuilder recommenderBuilder,
 			DataModelBuilder dataModelBuilder, DataModel dataModel,
 			IDRescorer rescorer, int at, double relevanceThreshold,
