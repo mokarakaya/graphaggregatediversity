@@ -15,5 +15,7 @@ public abstract class AbstractEvaluator {
     public AbstractEvaluator(){
         total=new BigDecimal(0);
     }
-    public abstract BigDecimal getResult(DataModel dataModel, int at, Map<Long, Integer> aggregateDiversityMap, DataModel testDataModel) throws TasteException;
+    public abstract void add(BigDecimal reciDividedByTotal);
+    public abstract BigDecimal getReturn();
+
 }

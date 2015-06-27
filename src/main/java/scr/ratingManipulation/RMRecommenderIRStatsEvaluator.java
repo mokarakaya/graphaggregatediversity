@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Preconditions;
 import scr.Math;
+import scr.evaulator.AggregateEvaluator;
 import scr.evaulator.GiniEvaluator;
 
 /**
@@ -124,15 +125,15 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
                 precisionIntersection += intersectionSize;
             }
         }
-        GiniEvaluator giniEvaluator= new GiniEvaluator();
-        BigDecimal totalGini = giniEvaluator.getResult(dataModel, at, aggregateDiversityMap, testDataModel);
+        AggregateEvaluator aggregateEvaluator= new AggregateEvaluator();
+        Map<String,BigDecimal> resultMap= aggregateEvaluator.getResult(dataModel, at, aggregateDiversityMap, testDataModel);
         return new RMIRStatisticsImpl(
                 precisionIntersection / precisionAll,
                 recall.getAverage(),
                 fallOut.getAverage(),
                 nDCG.getAverage(),
                 (double) numUsersWithRecommendations / (double) numUsersRecommendedFor,
-                aggregateDiversityMap.size(), totalGini.doubleValue());
+                aggregateDiversityMap.size(), resultMap);
     }
 
 

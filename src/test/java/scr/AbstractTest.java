@@ -2,10 +2,8 @@ package scr;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.math.BigDecimal;
+import java.util.*;
 
 import junit.framework.TestCase;
 
@@ -25,6 +23,7 @@ import org.apache.mahout.cf.taste.model.PreferenceArray;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 import org.apache.mahout.common.RandomUtils;
 
+import scr.evaulator.AggregateEvaluator;
 import scr.ratingManipulation.RMIRStatistics;
 import scr.ratingManipulation.RMRecommenderIRStatsEvaluator;
 
@@ -76,7 +75,9 @@ public abstract class AbstractTest  extends TestCase
 	        
 			RMRecommenderIRStatsEvaluator evaluator=new RMRecommenderIRStatsEvaluator();
 	        RMIRStatistics evaluate = evaluator.evaluate(builder, null, dataModel, null, 20, 4.5,trainingPrefs,testPrefs);
-	        System.out.println(evaluate.getPrecision()+";"+evaluate.getAggregateDiversity()+";"+evaluate.getGiniDiversity());
+			final Map<String, BigDecimal> aggregateMap = evaluate.getAggregateMap();
+			System.out.println(evaluate.getPrecision()+";"+evaluate.getAggregateDiversity()+";"+
+					aggregateMap.get(AggregateEvaluator.GINI)+";"+aggregateMap.get(AggregateEvaluator.HERF));
     	}
         assertTrue( true );
     }

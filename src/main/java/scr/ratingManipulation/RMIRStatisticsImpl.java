@@ -20,6 +20,8 @@ package scr.ratingManipulation;
 import com.google.common.base.Preconditions;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Map;
 
 public final class RMIRStatisticsImpl implements RMIRStatistics, Serializable {
 
@@ -29,10 +31,10 @@ public final class RMIRStatisticsImpl implements RMIRStatistics, Serializable {
     private final double fallOut;
     private final double ndcg;
     private final double reach;
-    private final double giniDiversity;
+    private final Map<String,BigDecimal> aggregateMap;
 
-    RMIRStatisticsImpl(double precision, double recall, double fallOut, double ndcg, double reach, double aggregateDiversity, double giniDiversity) {
-        this.giniDiversity = giniDiversity;
+    RMIRStatisticsImpl(double precision, double recall, double fallOut, double ndcg, double reach, double aggregateDiversity, Map<String,BigDecimal> aggregateMap) {
+        this.aggregateMap=aggregateMap;
         Preconditions.checkArgument(Double.isNaN(precision) || (precision >= 0.0 && precision <= 1.0),
                 "Illegal precision: " + precision);
         Preconditions.checkArgument(Double.isNaN(recall) || (recall >= 0.0 && recall <= 1.0), "Illegal recall: " + recall);
@@ -97,7 +99,9 @@ public final class RMIRStatisticsImpl implements RMIRStatistics, Serializable {
 	}
 
     @Override
-    public double getGiniDiversity() {
-        return giniDiversity;
+    public Map<String,BigDecimal> getAggregateMap() {
+        return aggregateMap;
     }
+
+
 }
