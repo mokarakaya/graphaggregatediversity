@@ -77,7 +77,8 @@ public abstract class AbstractTest  extends TestCase
 	        RMIRStatistics evaluate = evaluator.evaluate(builder, null, dataModel, null, 20, 4.5,trainingPrefs,testPrefs);
 			final Map<String, BigDecimal> aggregateMap = evaluate.getAggregateMap();
 			System.out.println(evaluate.getPrecision()+";"+evaluate.getAggregateDiversity()+";"+
-					aggregateMap.get(AggregateEvaluator.GINI)+";"+aggregateMap.get(AggregateEvaluator.HERF));
+					aggregateMap.get(AggregateEvaluator.GINI)+";"+aggregateMap.get(AggregateEvaluator.HERF)+";"+
+					aggregateMap.get(AggregateEvaluator.ENTROPY));
     	}
         assertTrue( true );
     }

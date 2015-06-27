@@ -17,11 +17,13 @@ public class AggregateEvaluator {
 
     public static final String GINI ="gini";
     public static final String HERF = "herf";
+    public static final String ENTROPY= "entropy";
     public Map<String,BigDecimal> getResult(DataModel dataModel, int at, Map<Long, Integer> aggregateDiversityMap, DataModel testDataModel) throws TasteException {
 
 
         HerfindahlEvaluator herf= new HerfindahlEvaluator();
         GiniEvaluator gini= new GiniEvaluator();
+        EntropyEvalutator entropy= new EntropyEvalutator();
         Map<Long, Integer> giniDiversityMap=new HashMap<>();
         LongPrimitiveIterator iterator = dataModel.getItemIDs();
         while(iterator.hasNext()) {
@@ -43,12 +45,14 @@ public class AggregateEvaluator {
                 BigDecimal reciDividedByTotal=new BigDecimal(reci).divide(new BigDecimal(numberOfUsers), 10, RoundingMode.DOWN);
                 gini.add(ordered,reciDividedByTotal);
                 herf.add(reciDividedByTotal);
+                entropy.add(reciDividedByTotal);
             }
             count++;
         }
         Map<String,BigDecimal> result= new HashMap<>();
         result.put(GINI,gini.getReturn());
         result.put(HERF,herf.getReturn());
+        result.put(ENTROPY,entropy.getReturn());
         return result;
     }
 }
