@@ -31,9 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Preconditions;
-import scr.Math;
 import scr.evaulator.AggregateEvaluator;
-import scr.evaulator.GiniEvaluator;
 
 /**
  * <p>

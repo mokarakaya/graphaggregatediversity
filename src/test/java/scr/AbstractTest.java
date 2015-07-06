@@ -44,7 +44,6 @@ public abstract class AbstractTest  extends TestCase
 
 
     	//DataModel dataModel= new FileDataModel(new File("c:/development/data/ml-1m/ratings.dat"));
-		//DataModel dataModel= new FileDataModel(new File("C:/development/data/amazonMovies/amazon-movies-tv-1mInt.data"));
 		DataModel dataModel= new FileDataModel(new File("C:/development/data/ymusic.data"));
 		//DataModel dataModel= new FileDataModel(new File("C:/development/data/bookcrossing/BX-Book-RatingsInt500.csv"));
 
@@ -57,11 +56,7 @@ public abstract class AbstractTest  extends TestCase
 	        
 	    splitPrefs(evaluationPercentage, dataModel, trainingPrefs, testPrefs);
 	    dataModel=new GenericDataModel(trainingPrefs);
-		int numFeatures=100;
-		float lambda=new Float( 0.02);
-		int numEpochs=20;
-		ParallelSGDFactorizer factorizer=new ParallelSGDFactorizer(dataModel, numFeatures, lambda, numEpochs);
-		final SVDRecommender recommender =new SVDRecommender(dataModel,factorizer,new AllUnknownItemsCandidateItemsStrategy());
+		final Recommender recommender =getBaseRecommender(dataModel);
     	for(double i=getMinThreshold();i<=getMaxThreshold();i+=getIncThreshold()){
     		final double  threshold=i;
 	    	RecommenderBuilder builder = new RecommenderBuilder() {
@@ -82,10 +77,12 @@ public abstract class AbstractTest  extends TestCase
     	}
         assertTrue( true );
     }
-	abstract double getMinThreshold();
-	abstract double getMaxThreshold();
-	abstract double getIncThreshold();
-    public abstract Recommender getRecommender(SVDRecommender recommender, double threshold) throws TasteException;
+	public abstract double getMinThreshold();
+	public abstract double getMaxThreshold();
+	public abstract double getIncThreshold();
+
+    public abstract Recommender getRecommender(Recommender baseRecommender, double threshold) throws TasteException;
+	public abstract Recommender getBaseRecommender(DataModel dataModel) throws TasteException;
     private void splitPrefs(double evaluationPercentage, DataModel dataModel,FastByIDMap<PreferenceArray> trainingPrefs 
     		,FastByIDMap<PreferenceArray> testPrefs ) throws TasteException{
          

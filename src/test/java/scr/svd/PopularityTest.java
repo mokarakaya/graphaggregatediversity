@@ -1,22 +1,23 @@
-package scr;
+package scr.svd;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
-import org.apache.mahout.cf.taste.impl.recommender.svd.SVDRecommender;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 
+import scr.AbstractTest;
+import scr.baseRecommender.BaseRecommender;
+import scr.baseRecommender.SVDBaseRecommender;
 import scr.ratingManipulation.AverageRatingRecommender;
 
 
 /**
  * Unit test for AverageRatingRecommender.
  */
-public class PopularityTest 
-    extends AbstractTest
+public class PopularityTest extends AbstractTest
 {
 	/**
 	 * keeps average rating of items
@@ -24,29 +25,34 @@ public class PopularityTest
 	private static Map<Long, Float> map = null;
 
 	@Override
-	double getMinThreshold() {
+	public double getMinThreshold() {
 		return 3;
 	}
 
 	@Override
-	double getMaxThreshold() {
+	public double getMaxThreshold() {
 		return 5.4;
 	}
 
 	@Override
-	double getIncThreshold() {
+	public double getIncThreshold() {
 		return 0.2;
 	}
 
 	@Override
-	public Recommender getRecommender(SVDRecommender recommender,
-			double threshold) throws TasteException {
+	public Recommender getRecommender(Recommender recommender, double threshold) throws TasteException {
 		if(map==null){
 			map=getPopularityMap(recommender.getDataModel());
 		}
 		return new AverageRatingRecommender(recommender, threshold, map);
 	}
-	
+
+	@Override
+	public Recommender getBaseRecommender(DataModel dataModel) throws TasteException {
+		BaseRecommender baseRecommender=new SVDBaseRecommender();
+		return baseRecommender.getBaseRecommender(dataModel);
+	}
+
 	/**
 	 * return average rating of items
 	 * @param dataModel
