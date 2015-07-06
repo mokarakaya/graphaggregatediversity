@@ -96,8 +96,11 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
             if(testPreferencesFromUser.length()<=5){
                 continue;
             }
-            int intersectionSize = 0;
             List<RecommendedItem> recommendedItems = recommender.recommend(userID, at, rescorer);
+            if(recommendedItems.size()<at){
+                continue;
+            }
+            int intersectionSize = 0;
             for (RecommendedItem recommendedItem : recommendedItems) {
                 if (aggregateDiversityMap.get(recommendedItem.getItemID()) == null) {
                     aggregateDiversityMap.put(recommendedItem.getItemID(), 1);

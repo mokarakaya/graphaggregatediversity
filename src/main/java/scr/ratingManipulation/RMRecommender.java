@@ -54,7 +54,9 @@ public class RMRecommender extends AbstractRecommender{
 	public List<RecommendedItem> recommend(long userID, int howMany,IDRescorer rescorer) throws TasteException {
 		 List<RecommendedItem> recommend = recommender.recommend(userID, 10000, rescorer);
 		 recommend=manipulate(recommend);
-		 recommend=recommend.subList(0,howMany);
+		 if(recommend.size()>howMany) {
+			 recommend = recommend.subList(0, howMany);
+		 }
 		 for (RecommendedItem recommendedItem : recommend) {
 		 	Integer recommendationCount= counter.get((int)recommendedItem.getItemID());
 		 	if(recommendationCount==null){
