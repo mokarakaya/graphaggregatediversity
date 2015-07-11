@@ -14,16 +14,13 @@ import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.model.GenericDataModel;
 import org.apache.mahout.cf.taste.impl.model.GenericUserPreferenceArray;
 import org.apache.mahout.cf.taste.impl.model.file.FileDataModel;
-import org.apache.mahout.cf.taste.impl.recommender.AllUnknownItemsCandidateItemsStrategy;
-import org.apache.mahout.cf.taste.impl.recommender.svd.ParallelSGDFactorizer;
-import org.apache.mahout.cf.taste.impl.recommender.svd.SVDRecommender;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.model.Preference;
 import org.apache.mahout.cf.taste.model.PreferenceArray;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 import org.apache.mahout.common.RandomUtils;
 
-import scr.baseRecommender.BaseRecommender;
+import scr.baseRecommender.generic.BaseRecommender;
 import scr.evaulator.AggregateEvaluator;
 import scr.ratingManipulation.RMIRStatistics;
 import scr.ratingManipulation.RMRecommenderIRStatsEvaluator;

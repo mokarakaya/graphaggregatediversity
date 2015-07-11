@@ -9,8 +9,6 @@ import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 
 import scr.AbstractTest;
-import scr.baseRecommender.BaseRecommender;
-import scr.baseRecommender.SVDBaseRecommender;
 import scr.ratingManipulation.AverageRatingRecommender;
 
 

@@ -12,8 +12,6 @@ import org.apache.mahout.cf.taste.model.PreferenceArray;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 
 import scr.AbstractTest;
-import scr.baseRecommender.BaseRecommender;
-import scr.baseRecommender.SVDBaseRecommender;
 import scr.ratingManipulation.AverageRatingRecommender;
 
 

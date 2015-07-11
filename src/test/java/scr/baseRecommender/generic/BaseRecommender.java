@@ -1,4 +1,4 @@
-package scr.baseRecommender;
+package scr.baseRecommender.generic;
 
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.model.DataModel;

@@ -1,8 +1,7 @@
 package scr.svd;
 
-import scr.baseRecommender.ItemBasedBaseRecommender;
 import scr.baseRecommender.RMTest;
-import scr.baseRecommender.SVDBaseRecommender;
+import scr.baseRecommender.generic.SVDBaseRecommender;
 
 
 /**

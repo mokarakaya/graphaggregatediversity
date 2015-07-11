@@ -1,8 +1,7 @@
 package scr.svd;
 
 import scr.baseRecommender.AverageRatingTest;
-import scr.baseRecommender.ItemBasedBaseRecommender;
-import scr.baseRecommender.SVDBaseRecommender;
+import scr.baseRecommender.generic.SVDBaseRecommender;
 
 /**
  * Created by p.bell on 07.07.2015.

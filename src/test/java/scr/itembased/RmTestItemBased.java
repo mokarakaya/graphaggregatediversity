@@ -1,6 +1,6 @@
 package scr.itembased;
 
-import scr.baseRecommender.ItemBasedBaseRecommender;
+import scr.baseRecommender.generic.ItemBasedBaseRecommender;
 import scr.baseRecommender.RMTest;
 
 

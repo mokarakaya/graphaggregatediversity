@@ -1,4 +1,4 @@
-package scr.baseRecommender;
+package scr.baseRecommender.generic;
 
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.recommender.AllUnknownItemsCandidateItemsStrategy;
@@ -6,7 +6,6 @@ import org.apache.mahout.cf.taste.impl.recommender.svd.ParallelSGDFactorizer;
 import org.apache.mahout.cf.taste.impl.recommender.svd.SVDRecommender;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.Recommender;
-import scr.baseRecommender.BaseRecommender;
 
 /**
  * Created by p.bell on 06.07.2015.
