@@ -11,11 +11,11 @@ import scr.baseRecommender.BaseRecommender;
 /**
  * Created by p.bell on 06.07.2015.
  */
-public class SVDBaseRecommender implements BaseRecommender {
+public interface SVDBaseRecommender extends BaseRecommender {
 
 
     @Override
-    public Recommender getBaseRecommender(DataModel dataModel) throws TasteException {
+    default public Recommender getBaseRecommender(DataModel dataModel) throws TasteException {
         int numFeatures=100;
         float lambda=new Float( 0.02);
         int numEpochs=20;

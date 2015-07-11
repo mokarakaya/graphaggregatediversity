@@ -1,4 +1,4 @@
-package scr.svd;
+package scr.baseRecommender;
 
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.model.DataModel;
@@ -13,31 +13,19 @@ import scr.ratingManipulation.RMRecommender;
 /**
  * Unit test for RMRecommender.
  */
-public class RMTest extends AbstractTest
+public abstract class RMTest extends AbstractTest
 {
 	@Override
-	public double getMinThreshold() {
-		return 0;
-	}
-
+	public double getMinThreshold() { return 0; }
 	@Override
-	public double getMaxThreshold() {
-		return 1;
-	}
-
+	public double getMaxThreshold() { return 1; }
 	@Override
-	public double getIncThreshold() {
-		return 0.1;
-	}
+	public double getIncThreshold() { return 0.1; }
 
 	@Override
 	public Recommender getRecommender(Recommender baseRecommender, double threshold) throws TasteException {
 		return new RMRecommender(baseRecommender, threshold);
 	}
 
-	@Override
-	public Recommender getBaseRecommender(DataModel dataModel) throws TasteException {
-		BaseRecommender baseRecommender=new SVDBaseRecommender();
-		return baseRecommender.getBaseRecommender(dataModel);
-	}
+
 }

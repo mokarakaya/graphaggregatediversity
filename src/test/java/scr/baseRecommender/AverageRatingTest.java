@@ -1,4 +1,4 @@
-package scr.svd;
+package scr.baseRecommender;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,12 +20,20 @@ import scr.ratingManipulation.AverageRatingRecommender;
 /**
  * Unit test for AverageRatingRecommender.
  */
-public class AverageRatingTest extends AbstractTest
+public abstract class AverageRatingTest extends AbstractTest
 {
 	/**
 	 * keeps average rating of items
 	 */
 	private static Map<Long, Float> map = null;
+	@Override
+	public double getMinThreshold() { return 3; }
+	@Override
+	public double getMaxThreshold() {
+		return 5.4;
+	}
+	@Override
+	public double getIncThreshold() { return 0.2; }
 
 	@Override
 	public Recommender getRecommender(Recommender recommender,double threshold) throws TasteException {
@@ -34,27 +42,6 @@ public class AverageRatingTest extends AbstractTest
 		}
 		return new AverageRatingRecommender(recommender, threshold, map);
 	}
-	@Override
-	public double getMinThreshold() {
-		return 3;
-	}
-
-	@Override
-	public double getMaxThreshold() {
-		return 5.4;
-	}
-
-	@Override
-	public double getIncThreshold() {
-		return 0.2;
-	}
-
-	@Override
-	public Recommender getBaseRecommender(DataModel dataModel) throws TasteException {
-		BaseRecommender baseRecommender=new SVDBaseRecommender();
-		return baseRecommender.getBaseRecommender(dataModel);
-	}
-
 	/**
 	 * return average rating of items
 	 * @param dataModel

@@ -23,6 +23,7 @@ import org.apache.mahout.cf.taste.model.PreferenceArray;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 import org.apache.mahout.common.RandomUtils;
 
+import scr.baseRecommender.BaseRecommender;
 import scr.evaulator.AggregateEvaluator;
 import scr.ratingManipulation.RMIRStatistics;
 import scr.ratingManipulation.RMRecommenderIRStatsEvaluator;
@@ -31,7 +32,7 @@ import scr.ratingManipulation.RMRecommenderIRStatsEvaluator;
 /**
  * Unit test for simple App.
  */
-public abstract class AbstractTest  extends TestCase
+public abstract class AbstractTest  extends TestCase implements BaseRecommender
 {
 
 	/**
@@ -43,8 +44,8 @@ public abstract class AbstractTest  extends TestCase
     {
 
 
-    	//DataModel dataModel= new FileDataModel(new File("c:/development/data/ml-1m/ratings.dat"));
-		DataModel dataModel= new FileDataModel(new File("C:/development/data/ymusic.data"));
+    	DataModel dataModel= new FileDataModel(new File("c:/development/data/ml-1m/ratings.dat"));
+		//DataModel dataModel= new FileDataModel(new File("C:/development/data/ymusic.data"));
 		//DataModel dataModel= new FileDataModel(new File("C:/development/data/bookcrossing/BX-Book-RatingsInt500.csv"));
 
 
@@ -82,8 +83,7 @@ public abstract class AbstractTest  extends TestCase
 	public abstract double getIncThreshold();
 
     public abstract Recommender getRecommender(Recommender baseRecommender, double threshold) throws TasteException;
-	public abstract Recommender getBaseRecommender(DataModel dataModel) throws TasteException;
-    private void splitPrefs(double evaluationPercentage, DataModel dataModel,FastByIDMap<PreferenceArray> trainingPrefs 
+	private void splitPrefs(double evaluationPercentage, DataModel dataModel,FastByIDMap<PreferenceArray> trainingPrefs
     		,FastByIDMap<PreferenceArray> testPrefs ) throws TasteException{
          
     	Random random = RandomUtils.getRandom();
