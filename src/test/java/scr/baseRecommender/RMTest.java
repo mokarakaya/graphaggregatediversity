@@ -17,7 +17,7 @@ public abstract class RMTest extends AbstractTest
 	@Override
 	public double getMaxThreshold() { return 1; }
 	@Override
-	public double getIncThreshold() { return 0.1; }
+	public double getIncThreshold() { return 0.5; }
 
 	@Override
 	public Recommender getRecommender(Recommender baseRecommender, double threshold) throws TasteException {

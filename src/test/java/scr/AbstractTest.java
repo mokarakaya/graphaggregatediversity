@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.concurrent.ConcurrentMap;
 
 import junit.framework.TestCase;
 
@@ -25,13 +26,16 @@ import scr.evaulator.AggregateEvaluator;
 import scr.ratingManipulation.RMIRStatistics;
 import scr.ratingManipulation.RMRecommenderIRStatsEvaluator;
 
+import static junit.framework.Assert.assertTrue;
+
 
 /**
  * Unit test for simple App.
  */
-public abstract class AbstractTest  extends TestCase implements BaseRecommender
+public abstract class AbstractTest  implements BaseRecommender
 {
 
+	public Map<String,Map<Double,Double>> returnMap;
 	/**
      * Rigourous Test :-)
      * @throws IOException 
@@ -41,11 +45,11 @@ public abstract class AbstractTest  extends TestCase implements BaseRecommender
     {
 
 
-    	DataModel dataModel= new FileDataModel(new File("c:/development/data/ml-1m/ratings.dat"));
-		//DataModel dataModel= new FileDataModel(new File("C:/development/data/ymusic.data"));
+    	//DataModel dataModel= new FileDataModel(new File("c:/development/data/ml-1m/ratings.dat"));
+		DataModel dataModel= new FileDataModel(new File("C:/development/data/ymusic.data"));
 		//DataModel dataModel= new FileDataModel(new File("C:/development/data/bookcrossing/BX-Book-RatingsInt500.csv"));
 
-
+		returnMap=new HashMap<>();
     	double evaluationPercentage=0.7;
 		FastByIDMap<PreferenceArray> trainingPrefs = new FastByIDMap<>(
 	                1 + (int) (evaluationPercentage * dataModel.getNumUsers()));
@@ -69,11 +73,32 @@ public abstract class AbstractTest  extends TestCase implements BaseRecommender
 			RMRecommenderIRStatsEvaluator evaluator=new RMRecommenderIRStatsEvaluator();
 	        RMIRStatistics evaluate = evaluator.evaluate(builder, null, dataModel, null, 20, 4.5,trainingPrefs,testPrefs);
 			final Map<String, BigDecimal> aggregateMap = evaluate.getAggregateMap();
-			System.out.println(evaluate.getPrecision()+";"+evaluate.getAggregateDiversity()+";"+
-					aggregateMap.get(AggregateEvaluator.GINI)+";"+aggregateMap.get(AggregateEvaluator.HERF)+";"+
+
+			if(returnMap.get(AggregateEvaluator.AGGREGATE)==null){
+				returnMap.put(AggregateEvaluator.AGGREGATE,new HashMap<Double,Double>());
+			}
+			returnMap.get(AggregateEvaluator.AGGREGATE).put(evaluate.getPrecision(),evaluate.getAggregateDiversity());
+
+			//gini
+			if(returnMap.get(AggregateEvaluator.GINI)==null){
+				returnMap.put(AggregateEvaluator.GINI, new HashMap<Double,Double>());
+			}
+			returnMap.get(AggregateEvaluator.GINI).put(evaluate.getPrecision(),aggregateMap.get(AggregateEvaluator.GINI).doubleValue());
+
+			if(returnMap.get(AggregateEvaluator.HERF)==null){
+				returnMap.put(AggregateEvaluator.HERF, new HashMap<Double,Double>());
+			}
+			returnMap.get(AggregateEvaluator.HERF).put(evaluate.getPrecision(),aggregateMap.get(AggregateEvaluator.HERF).doubleValue());
+
+			if(returnMap.get(AggregateEvaluator.ENTROPY)==null){
+				returnMap.put(AggregateEvaluator.ENTROPY, new HashMap<Double,Double>());
+			}
+			returnMap.get(AggregateEvaluator.ENTROPY).put(evaluate.getPrecision(),aggregateMap.get(AggregateEvaluator.ENTROPY).doubleValue());
+
+			System.out.println(evaluate.getPrecision() + ";" + evaluate.getAggregateDiversity() + ";" +
+					aggregateMap.get(AggregateEvaluator.GINI) + ";" + aggregateMap.get(AggregateEvaluator.HERF) + ";" +
 					aggregateMap.get(AggregateEvaluator.ENTROPY));
     	}
-        assertTrue( true );
     }
 	public abstract double getMinThreshold();
 	public abstract double getMaxThreshold();

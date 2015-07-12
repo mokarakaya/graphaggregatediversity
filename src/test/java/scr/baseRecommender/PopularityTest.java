@@ -26,7 +26,7 @@ public abstract class PopularityTest extends AbstractTest
 	@Override
 	public double getMaxThreshold() { return 5.4; }
 	@Override
-	public double getIncThreshold() { return 0.2; }
+	public double getIncThreshold() { return 2; }//0.2
 
 	@Override
 	public Recommender getRecommender(Recommender recommender, double threshold) throws TasteException {
