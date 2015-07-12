@@ -1,6 +1,7 @@
 package scr.draw;
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.NumberAxis;
@@ -12,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 
 public class XYChartCreator extends Application implements Runnable {

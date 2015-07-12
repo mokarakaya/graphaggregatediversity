@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.RunnableFuture;
 
 import junit.framework.TestCase;
 
@@ -32,10 +33,21 @@ import static junit.framework.Assert.assertTrue;
 /**
  * Unit test for simple App.
  */
-public abstract class AbstractTest  implements BaseRecommender
+public abstract class AbstractTest  implements BaseRecommender,Runnable
 {
-
+	public BaseRecommender baseRecommender;
 	public Map<String,Map<Double,Double>> returnMap;
+
+	@Override
+	public void run() {
+		try {
+			testApp();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (TasteException e) {
+			e.printStackTrace();
+		}
+	}
 	/**
      * Rigourous Test :-)
      * @throws IOException 
@@ -103,7 +115,10 @@ public abstract class AbstractTest  implements BaseRecommender
 	public abstract double getMinThreshold();
 	public abstract double getMaxThreshold();
 	public abstract double getIncThreshold();
-
+	@Override
+	public Recommender getBaseRecommender(DataModel dataModel) throws TasteException {
+		return baseRecommender.getBaseRecommender(dataModel);
+	}
     public abstract Recommender getRecommender(Recommender baseRecommender, double threshold) throws TasteException;
 	private void splitPrefs(double evaluationPercentage, DataModel dataModel,FastByIDMap<PreferenceArray> trainingPrefs
     		,FastByIDMap<PreferenceArray> testPrefs ) throws TasteException{

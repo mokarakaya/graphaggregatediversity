@@ -1,10 +1,16 @@
-package scr.svd;
+package scr;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.stage.Stage;
 import junit.framework.TestCase;
 import org.apache.mahout.cf.taste.common.TasteException;
+import org.apache.mahout.cf.taste.model.DataModel;
+import org.apache.mahout.cf.taste.recommender.Recommender;
+import scr.baseRecommender.AverageRatingTest;
+import scr.baseRecommender.PopularityTest;
+import scr.baseRecommender.RMTest;
+import scr.baseRecommender.generic.ItemBasedBaseRecommender;
 import scr.draw.XYChartCreator;
 import scr.draw.XYChartModel;
 
@@ -16,38 +22,34 @@ import java.util.Map;
 /**
  * Created by p.bell on 11.07.2015.
  */
-public class SVDTestRunner extends TestCase{
+public class XYChartTest {
 
-    public void testApp() throws IOException, TasteException, InterruptedException {
+    public void testApp(String title,RMTest rmTest, PopularityTest popularityTest,AverageRatingTest averageRatingTest) throws IOException, TasteException, InterruptedException {
         // Because we need to init the JavaFX toolkit - which usually Application.launch does
         // I'm not sure if this way of launching has any effect on anything
         new JFXPanel();
-        RmTestSVD rmTestSVD= new RmTestSVD();
-        Thread rmTestSVDThread = new Thread(rmTestSVD);
-        rmTestSVDThread.start();
+        Thread rmTestThread = new Thread(rmTest);
+        rmTestThread.start();
 
-        PopularitySVD popularitySVD= new PopularitySVD();
-        Thread popularitySVDThread=new Thread(popularitySVD);
-        popularitySVDThread.start();
+        Thread popularityThread=new Thread(popularityTest);
+        popularityThread.start();
 
-        AverageRatingSVD averageRatingSVD= new AverageRatingSVD();
-        Thread averageRatingSVDThread= new Thread(averageRatingSVD);
-        averageRatingSVDThread.start();
+        Thread averageRatingThread= new Thread(averageRatingTest);
+        averageRatingThread.start();
 
-        rmTestSVDThread.join();
-        popularitySVDThread.join();
-        averageRatingSVDThread.join();
+        rmTestThread.join();
+        popularityThread.join();
+        averageRatingThread.join();
 
-
-        Iterator<String> iterator = rmTestSVD.returnMap.keySet().iterator();
+        Iterator<String> iterator = rmTest.returnMap.keySet().iterator();
         while(iterator.hasNext()){
             String key=iterator.next();
             Map<String,Map<Double,Double>> map= new HashMap<>();
-            map.put("RM",rmTestSVD.returnMap.get(key));
-            map.put("Popularity", popularitySVD.returnMap.get(key));
-            map.put("AverageRating",averageRatingSVD.returnMap.get(key));
+            map.put("RM",rmTest.returnMap.get(key));
+            map.put("Popularity", popularityTest.returnMap.get(key));
+            map.put("AverageRating",averageRatingTest.returnMap.get(key));
             XYChartModel model=new XYChartModel();
-            model.title="SVD Movielens";
+            model.title=title;
             model.xAxisLabel="precision";
             model.yAxisLabel=key;
             model.series=map;
@@ -69,7 +71,9 @@ public class SVDTestRunner extends TestCase{
                 e.printStackTrace();
             }
         }
+        //graphs should be rendered in 10000000 milis
         Thread.sleep(10000000);
     }
+
 
 }

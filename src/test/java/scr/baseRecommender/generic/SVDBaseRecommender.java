@@ -10,11 +10,11 @@ import org.apache.mahout.cf.taste.recommender.Recommender;
 /**
  * Created by p.bell on 06.07.2015.
  */
-public interface SVDBaseRecommender extends BaseRecommender {
+public class SVDBaseRecommender implements BaseRecommender {
 
 
     @Override
-    default public Recommender getBaseRecommender(DataModel dataModel) throws TasteException {
+    public Recommender getBaseRecommender(DataModel dataModel) throws TasteException {
         int numFeatures=100;
         float lambda=new Float( 0.02);
         int numEpochs=20;

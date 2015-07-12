@@ -17,9 +17,10 @@ import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 /**
  * Created by p.bell on 11.07.2015.
  */
-public interface UserBasedBaseRecommender extends BaseRecommender{
+public class UserBasedBaseRecommender implements BaseRecommender{
 
-    default public Recommender getBaseRecommender(DataModel dataModel) throws TasteException {
+    @Override
+    public Recommender getBaseRecommender(DataModel dataModel) throws TasteException {
         //UserSimilarity similarity = (UserSimilarity) new PearsonCorrelationSimilarity(dataModel);
         UserSimilarity similarity = (UserSimilarity) new UncenteredCosineSimilarity(dataModel);
         //UserSimilarity similarity = (UserSimilarity) new TanimotoCoefficientSimilarity(dataModel);

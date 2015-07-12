@@ -12,14 +12,16 @@ import org.apache.mahout.cf.taste.model.PreferenceArray;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 
 import scr.AbstractTest;
+import scr.baseRecommender.generic.BaseRecommender;
 import scr.ratingManipulation.AverageRatingRecommender;
 
 
 /**
  * Unit test for AverageRatingRecommender.
  */
-public abstract class AverageRatingTest extends AbstractTest
+public class AverageRatingTest extends AbstractTest
 {
+	public AverageRatingTest(BaseRecommender baseRecommender){this.baseRecommender=baseRecommender;}
 	/**
 	 * keeps average rating of items
 	 */
@@ -31,7 +33,7 @@ public abstract class AverageRatingTest extends AbstractTest
 		return 5.4;
 	}
 	@Override
-	public double getIncThreshold() { return 2; }//0.2
+	public double getIncThreshold() { return 0.2; }//
 
 	@Override
 	public Recommender getRecommender(Recommender recommender,double threshold) throws TasteException {
