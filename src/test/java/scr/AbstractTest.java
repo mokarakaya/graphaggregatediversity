@@ -56,7 +56,7 @@ public abstract class AbstractTest  implements BaseRecommender,Runnable
      */
     public void testApp() throws IOException, TasteException
     {
-    	DataModel dataModel= new FileDataModel(new File("C:/javafx/data/"+ Runner.DATA));
+    	DataModel dataModel= new FileDataModel(new File("C:/javafx/data/"+ Runner.DATA+".data"));
 		returnMap=new HashMap<>();
     	double evaluationPercentage=0.7;
 		FastByIDMap<PreferenceArray> trainingPrefs = new FastByIDMap<>(
