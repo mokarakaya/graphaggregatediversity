@@ -27,13 +27,11 @@ public class AverageRatingTest extends AbstractTest
 	 */
 	private static Map<Long, Float> map = null;
 	@Override
-	public double getMinThreshold() { return 3; }
+	public double getMinThreshold() { return  1.5;}//3; }
 	@Override
-	public double getMaxThreshold() {
-		return 5.4;
-	}
+	public double getMaxThreshold() { return 10.8;}//5.4; }
 	@Override
-	public double getIncThreshold() { return 0.2; }//
+	public double getIncThreshold() { return 0.4;}//0.2; }//
 
 	@Override
 	public Recommender getRecommender(Recommender recommender,double threshold) throws TasteException {
