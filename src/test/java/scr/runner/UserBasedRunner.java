@@ -15,12 +15,12 @@ import java.io.IOException;
 /**
  * Created by p.bell on 12.07.2015.
  */
-public class UserBasedRunner extends TestCase{
+public class UserBasedRunner extends TestCase implements  Runner{
 
     public void testApp() throws InterruptedException, TasteException, IOException {
         BaseRecommender baseRecommender= new UserBasedBaseRecommender();
         XYChartTest test= new XYChartTest();
-        test.testApp("User Based Movielens",new RMTest(baseRecommender),
+        test.testApp("User Based "+DATA,new RMTest(baseRecommender),
                     new PopularityTest(baseRecommender),new AverageRatingTest(baseRecommender));
 
     }

@@ -16,12 +16,12 @@ import java.io.IOException;
 /**
  * Created by p.bell on 12.07.2015.
  */
-public class SVDRunner extends TestCase{
+public class SVDRunner extends TestCase implements  Runner{
 
     public void testApp() throws InterruptedException, TasteException, IOException {
         BaseRecommender baseRecommender= new SVDBaseRecommender();
         XYChartTest test= new XYChartTest();
-        test.testApp("SVD Movielens",new RMTest(baseRecommender),
+        test.testApp("SVD "+DATA,new RMTest(baseRecommender),
                     new PopularityTest(baseRecommender),new AverageRatingTest(baseRecommender));
 
     }

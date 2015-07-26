@@ -26,6 +26,7 @@ import scr.baseRecommender.generic.BaseRecommender;
 import scr.evaulator.AggregateEvaluator;
 import scr.ratingManipulation.RMIRStatistics;
 import scr.ratingManipulation.RMRecommenderIRStatsEvaluator;
+import scr.runner.Runner;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -55,12 +56,7 @@ public abstract class AbstractTest  implements BaseRecommender,Runnable
      */
     public void testApp() throws IOException, TasteException
     {
-
-
-    	//DataModel dataModel= new FileDataModel(new File("c:/development/data/ml-1m/ratings.dat"));
-		DataModel dataModel= new FileDataModel(new File("C:/development/data/ymusic.data"));
-		//DataModel dataModel= new FileDataModel(new File("C:/development/data/bookcrossing/BX-Book-RatingsInt500.csv"));
-
+    	DataModel dataModel= new FileDataModel(new File("C:/javafx/data/"+ Runner.DATA));
 		returnMap=new HashMap<>();
     	double evaluationPercentage=0.7;
 		FastByIDMap<PreferenceArray> trainingPrefs = new FastByIDMap<>(

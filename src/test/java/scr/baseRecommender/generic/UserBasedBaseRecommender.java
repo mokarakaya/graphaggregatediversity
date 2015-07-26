@@ -19,12 +19,14 @@ import org.apache.mahout.cf.taste.similarity.UserSimilarity;
  */
 public class UserBasedBaseRecommender implements BaseRecommender{
 
+    private static final int NUMBER_OF_NEIGBORHOOD=50;
     @Override
     public Recommender getBaseRecommender(DataModel dataModel) throws TasteException {
+
         //UserSimilarity similarity = (UserSimilarity) new PearsonCorrelationSimilarity(dataModel);
         UserSimilarity similarity = (UserSimilarity) new UncenteredCosineSimilarity(dataModel);
         //UserSimilarity similarity = (UserSimilarity) new TanimotoCoefficientSimilarity(dataModel);
-        UserNeighborhood userNeighborhood= new NearestNUserNeighborhood(dataModel.getNumUsers(),similarity,dataModel);
+        UserNeighborhood userNeighborhood= new NearestNUserNeighborhood(NUMBER_OF_NEIGBORHOOD,similarity,dataModel);
         return new CachingRecommender(new GenericUserBasedRecommender(dataModel,new CachingUserNeighborhood(userNeighborhood,dataModel), similarity));
     }
 }
