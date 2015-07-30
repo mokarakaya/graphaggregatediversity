@@ -1,10 +1,8 @@
 package scr.baseRecommender.generic;
 
 import org.apache.mahout.cf.taste.common.TasteException;
-import org.apache.mahout.cf.taste.impl.recommender.AllSimilarItemsCandidateItemsStrategy;
-import org.apache.mahout.cf.taste.impl.recommender.CachingRecommender;
-import org.apache.mahout.cf.taste.impl.recommender.GenericItemBasedRecommender;
-import org.apache.mahout.cf.taste.impl.recommender.SamplingCandidateItemsStrategy;
+import org.apache.mahout.cf.taste.impl.recommender.*;
+import org.apache.mahout.cf.taste.impl.similarity.PearsonCorrelationSimilarity;
 import org.apache.mahout.cf.taste.impl.similarity.TanimotoCoefficientSimilarity;
 import org.apache.mahout.cf.taste.impl.similarity.UncenteredCosineSimilarity;
 import org.apache.mahout.cf.taste.model.DataModel;
@@ -24,7 +22,7 @@ public class ItemBasedBaseRecommender implements BaseRecommender {
         ItemSimilarity similarity = (ItemSimilarity) new UncenteredCosineSimilarity(dataModel);
         //ItemSimilarity similarity = (ItemSimilarity) new TanimotoCoefficientSimilarity(dataModel);
         CandidateItemsStrategy candidateItemsStrategy=new SamplingCandidateItemsStrategy(dataModel.getNumUsers(),dataModel.getNumItems());
-        SamplingCandidateItemsStrategy mostSimilarItemsCandidateItemsStrategy=new SamplingCandidateItemsStrategy(dataModel.getNumUsers(),dataModel.getNumItems());
-        return new CachingRecommender(new GenericItemBasedRecommender(dataModel, similarity,candidateItemsStrategy,mostSimilarItemsCandidateItemsStrategy));
+        AllUnknownItemsCandidateItemsStrategy mostSimilarItemsCandidateItemsStrategy=new AllUnknownItemsCandidateItemsStrategy();
+        return new GenericItemBasedRecommender(dataModel, similarity,candidateItemsStrategy,mostSimilarItemsCandidateItemsStrategy);
     }
 }
