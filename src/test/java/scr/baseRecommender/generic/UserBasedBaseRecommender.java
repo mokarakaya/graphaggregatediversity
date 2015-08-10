@@ -28,6 +28,6 @@ public class UserBasedBaseRecommender implements BaseRecommender{
         //UserSimilarity similarity = (UserSimilarity) new UncenteredCosineSimilarity(dataModel);
         //UserSimilarity similarity = (UserSimilarity) new TanimotoCoefficientSimilarity(dataModel);
         UserNeighborhood userNeighborhood= new NearestNUserNeighborhood(NUMBER_OF_NEIGBORHOOD,similarity,dataModel);
-        return new GenericUserBasedRecommender(dataModel,new CachingUserNeighborhood(userNeighborhood,dataModel), similarity);
+        return new GenericUserBasedRecommender(dataModel,userNeighborhood, similarity);
     }
 }

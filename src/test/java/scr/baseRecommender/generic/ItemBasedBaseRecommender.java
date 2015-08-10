@@ -19,10 +19,7 @@ public class ItemBasedBaseRecommender implements BaseRecommender {
     @Override
      public Recommender getBaseRecommender(DataModel dataModel) throws TasteException {
         ItemSimilarity similarity = (ItemSimilarity) new PearsonCorrelationSimilarity(dataModel);
-        //ItemSimilarity similarity = (ItemSimilarity) new UncenteredCosineSimilarity(dataModel);
-        //ItemSimilarity similarity = (ItemSimilarity) new TanimotoCoefficientSimilarity(dataModel);
-        CandidateItemsStrategy candidateItemsStrategy=new SamplingCandidateItemsStrategy(dataModel.getNumUsers(),dataModel.getNumItems());
-        AllUnknownItemsCandidateItemsStrategy mostSimilarItemsCandidateItemsStrategy=new AllUnknownItemsCandidateItemsStrategy();
-        return new GenericItemBasedRecommender(dataModel, similarity,candidateItemsStrategy,mostSimilarItemsCandidateItemsStrategy);
+        return new GenericItemBasedRecommender(dataModel, similarity,
+                new AllUnknownItemsCandidateItemsStrategy(),new AllUnknownItemsCandidateItemsStrategy());
     }
 }
