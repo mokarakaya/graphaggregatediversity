@@ -11,5 +11,6 @@ public interface Runner {
     public static final String DATA="Movielens";
     //public static final String DATA="Yahoo Music";
     //public static final String DATA="Bookcrossing";
+    //public static final String DATA="Movielens100K";
     public void testApp() throws InterruptedException, TasteException, IOException;
 }

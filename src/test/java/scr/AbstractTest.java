@@ -103,7 +103,7 @@ public abstract class AbstractTest  implements BaseRecommender,Runnable
 			}
 			returnMap.get(AggregateEvaluator.ENTROPY).put(evaluate.getPrecision(),aggregateMap.get(AggregateEvaluator.ENTROPY).doubleValue());
 
-			System.out.println(evaluate.getPrecision() + ";" + evaluate.getAggregateDiversity() + ";" +
+			System.out.println(this.getClass().getSimpleName()+";"+i+";"+ evaluate.getPrecision() + ";" + evaluate.getAggregateDiversity() + ";" +
 					aggregateMap.get(AggregateEvaluator.GINI) + ";" + aggregateMap.get(AggregateEvaluator.HERF) + ";" +
 					aggregateMap.get(AggregateEvaluator.ENTROPY));
     	}
