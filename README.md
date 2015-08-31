@@ -1,0 +1,2 @@
+This project implements two methods (**Item Average Rating, Item Absolute Likeability**) in journal 
+**Improving Recommendation Diversity Using Ranking-Based Techniques** (by Gediminas Adomavicius and YoungOk Kwon) at **http://ids.csom.umn.edu/faculty/gedas/NSFCareer/Diversity-Aug2009.pdf**
