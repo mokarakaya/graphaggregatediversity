@@ -34,6 +34,7 @@ import com.google.common.base.Preconditions;
 import scr.evaulator.AggregateEvaluator;
 
 /**
+ * This is a faster version of Apache Mahout evaluator since it can use existing dataset without any maniplation
  * <p>
  * For each user, these implementation determine the top {@code n} preferences, then evaluate the IR
  * statistics based on a {@link DataModel} that does not have these values. This number {@code n} is the

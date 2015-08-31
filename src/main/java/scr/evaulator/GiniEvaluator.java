@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * check the full formula at ;https://drive.google.com/file/d/0Bza6pDqxvgg-QWo0emtMcVlrM0k/view?usp=sharing
  * Created by p.bell on 22.06.2015.
  */
 public class GiniEvaluator extends AbstractEvaluator{

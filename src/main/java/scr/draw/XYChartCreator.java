@@ -16,6 +16,9 @@ import java.util.Map;
 import java.util.Set;
 
 
+/**
+ * java fx 2d graph
+ */
 public class XYChartCreator extends Application implements Runnable {
 
     XYChartModel model;

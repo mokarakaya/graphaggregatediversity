@@ -14,6 +14,7 @@ import java.util.*;
 
 /**
  * Created by p.bell on 07.04.2015.
+ * Adomavicius method
  */
 public class AverageRatingRecommender extends AbstractRecommender{
     

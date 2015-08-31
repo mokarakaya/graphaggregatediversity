@@ -15,6 +15,7 @@ import java.util.Map;
  */
 public class AggregateEvaluator {
 
+    //we evaluate the recommenders with four different evaluators.
     public static final String GINI ="gini";
     public static final String HERF = "herf";
     public static final String ENTROPY= "entropy";

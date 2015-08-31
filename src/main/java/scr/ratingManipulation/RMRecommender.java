@@ -19,12 +19,14 @@ import org.apache.mahout.cf.taste.recommender.Recommender;
 
 /**
  * Created by p.bell on 07.04.2015.
+ * newly introduced rating manuplation method
  */
 public class RMRecommender extends AbstractRecommender{
 
 	private int NUMBER_OF_ITEMS;
 	private final Double threshold ;
 	Map<Integer,Integer> counter;
+	private Recommender recommender;
 	public RMRecommender(Recommender recommender,Double threshold) throws TasteException {
 		super(recommender.getDataModel());
 		this.recommender=recommender;
@@ -32,9 +34,14 @@ public class RMRecommender extends AbstractRecommender{
 		counter=new HashMap<>();
 		this.NUMBER_OF_ITEMS=recommender.getDataModel().getNumItems();
 	}
-	private Recommender recommender;
 
-
+	/**
+	 * our method to increase aggregate diversity is;
+	 * rating=   rating * (1- ( (recommendationCount/numberofUUsers ) pow th ))
+	 * @param recommend
+	 * @return
+	 * @throws TasteException
+	 */
     private List<RecommendedItem> manipulate(List<RecommendedItem> recommend) throws TasteException {
         List<RecommendedItem> result= new ArrayList<RecommendedItem>();
         for(RecommendedItem item: recommend){
