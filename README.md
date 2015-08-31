@@ -11,9 +11,10 @@ And we propose a new method (**Rating Maniplation**) in order to increase aggreg
 We measure these three methods with different measures such as gini, herf, entropy.
 
 
-More over we find a faster way than **Apache Mahout** to evaluate recommenders.
+Moreover we find a faster way than **Apache Mahout** to evaluate recommenders.
 
 **Technologies;**
+
 **Apache Mahout**
 
 **JavaFX**
