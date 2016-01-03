@@ -1,4 +1,4 @@
-package scr.ratingManipulation;
+package scr.ratingManipulation.purposed;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,10 +23,10 @@ import org.apache.mahout.cf.taste.recommender.Recommender;
  */
 public class RMRecommender extends AbstractRecommender{
 
-	private int NUMBER_OF_ITEMS;
-	private final Double threshold ;
-	Map<Integer,Integer> counter;
-	private Recommender recommender;
+	protected int NUMBER_OF_ITEMS;
+	protected final Double threshold ;
+	protected Map<Integer,Integer> counter;
+	protected Recommender recommender;
 	public RMRecommender(Recommender recommender,Double threshold) throws TasteException {
 		super(recommender.getDataModel());
 		this.recommender=recommender;
@@ -42,7 +42,7 @@ public class RMRecommender extends AbstractRecommender{
 	 * @return
 	 * @throws TasteException
 	 */
-    private List<RecommendedItem> manipulate(List<RecommendedItem> recommend) throws TasteException {
+    protected List<RecommendedItem> manipulate(List<RecommendedItem> recommend) throws TasteException {
         List<RecommendedItem> result= new ArrayList<RecommendedItem>();
         for(RecommendedItem item: recommend){
             double value=  item.getValue();
