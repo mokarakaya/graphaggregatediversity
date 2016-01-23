@@ -93,6 +93,7 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
 
             long userID = ite.nextLong();
 
+            //TODO: we should check if the number of preferences with rating >=4 is more than 5
             PreferenceArray testPreferencesFromUser = testDataModel.getPreferencesFromUser(userID);
             if(testPreferencesFromUser.length()<=5){
                 continue;
@@ -112,6 +113,7 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
                 while (iterator.hasNext()) {
                     Preference next = iterator.next();
                     if (next.getItemID() == recommendedItem.getItemID()) {
+                        //TODO: remove hardcoded rating.
                         if (next.getValue() >= 4.5) {
                             intersectionSize++;
                         }
