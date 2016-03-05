@@ -271,11 +271,12 @@ public class ParallelSGDGraphFactorizer  extends AbstractFactorizer {
         float rating = preference.getValue();
         float statement;
         try {
-            statement = Math.min(0,1-dataModel.getPreferencesForItem(preference.getItemID()).length()/avgOccurrence);
+            statement = Math.max(0, 1 - ((float)dataModel.getPreferencesForItem(preference.getItemID()).length() / avgOccurrence));
         } catch (TasteException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+
         float replacedRating= ((rating/ratingScale)*rating)+(((ratingScale-rating)/ratingScale)*rating
                 *statement);
         double err = replacedRating - prediction;

@@ -6,10 +6,7 @@ import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 import scr.AbstractTest;
 import scr.XYChartTest;
-import scr.baseRecommender.AggregateGraphTest;
-import scr.baseRecommender.AverageRatingTest;
-import scr.baseRecommender.PopularityTest;
-import scr.baseRecommender.RMTest;
+import scr.baseRecommender.*;
 import scr.baseRecommender.generic.BaseRecommender;
 import scr.baseRecommender.generic.SVDBaseRecommender;
 
@@ -26,6 +23,7 @@ public class SVDRunner extends TestCase implements  Runner{
         BaseRecommender baseRecommender= new SVDBaseRecommender();
         XYChartTest test= new XYChartTest();
         List<AbstractTest>tests=new ArrayList<>();
+        tests.add(new AggregateSVDGraphTest(baseRecommender));
         tests.add(new AggregateGraphTest(baseRecommender));
         tests.add(new RMTest(baseRecommender));
         tests.add(new PopularityTest(baseRecommender));

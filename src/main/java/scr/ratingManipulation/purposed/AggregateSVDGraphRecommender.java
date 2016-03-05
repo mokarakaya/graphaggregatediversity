@@ -27,8 +27,8 @@ public class AggregateSVDGraphRecommender extends AbstractRecommender {
         int numFeatures=100;
         float lambda=new Float( 0.02);
         int numEpochs=20;
-        ParallelSGDGraphFactorizer factorizer=new ParallelSGDGraphFactorizer(recommender.getDataModel(), numFeatures, lambda, numEpochs);
-        this.recommender=new SVDRecommender(recommender.getDataModel(),factorizer,candidateItemsStrategy);
+        ParallelSGDGraphFactorizer factorizer=new ParallelSGDGraphFactorizer(dataModel, numFeatures, lambda, numEpochs);
+        this.recommender=new SVDRecommender(dataModel,factorizer,candidateItemsStrategy);
     }
 
     @Override
