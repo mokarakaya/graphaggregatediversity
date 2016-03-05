@@ -211,7 +211,7 @@ public class ParallelSGDGraphFactorizer  extends AbstractFactorizer {
                         @Override
                         public void run() {
                             for (int i = iStart; i < iEnd; i++) {
-                                update(shuffler.get(i), mu);
+                                update(shuffler.get(i), mu,0);
                             }
                         }
                     });
@@ -262,7 +262,7 @@ public class ParallelSGDGraphFactorizer  extends AbstractFactorizer {
      *            so it's impact on accuracy may still be unknown.
      * BAD SIDE3: don't know how to make it work for L1-regularization or
      *            "pseudorank?" (sum of singular values)-regularization */
-    protected void update(Preference preference, double mu) {
+    protected void update(Preference preference, double mu,int recommendationCount) {
         int userIndex = userIndex(preference.getUserID());
         int itemIndex = itemIndex(preference.getItemID());
 
@@ -273,7 +273,8 @@ public class ParallelSGDGraphFactorizer  extends AbstractFactorizer {
         float rating = preference.getValue();
         float statement;
         try {
-            statement = Math.max(0, ONE - ((float)dataModel.getPreferencesForItem(preference.getItemID()).length() / avgOccurrence));
+            float occ =dataModel.getPreferencesForItem(preference.getItemID()).length()+recommendationCount;
+            statement = Math.max(0, ONE - (occ/ avgOccurrence));
         } catch (TasteException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
