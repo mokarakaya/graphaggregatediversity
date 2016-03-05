@@ -62,6 +62,8 @@ public class ParallelSGDGraphFactorizer  extends AbstractFactorizer {
     private static final int FEATURE_OFFSET = 3;
     /** Standard deviation for random initialization of features */
     private static final double NOISE = 0.02;
+    private float ratingScale;
+    private int avgOccurrence;
 
     private static final Logger logger = LoggerFactory.getLogger(ParallelSGDGraphFactorizer.class);
     public ParallelSGDGraphFactorizer(DataModel dataModel, int numFeatures, double lambda, int numEpochs)
@@ -71,7 +73,14 @@ public class ParallelSGDGraphFactorizer  extends AbstractFactorizer {
         this.rank = numFeatures + FEATURE_OFFSET;
         this.lambda = lambda;
         this.numEpochs = numEpochs;
-
+        this.ratingScale=dataModel.getMaxPreference();
+        LongPrimitiveIterator dataModelItemIds = dataModel.getItemIDs();
+        int occurrence=0;
+        while(dataModelItemIds.hasNext()){
+            Long itemId = dataModelItemIds.next();
+            occurrence+=dataModel.getPreferencesForItem(itemId).length();
+        }
+        avgOccurrence=occurrence/dataModel.getNumItems();
         shuffler = new PreferenceShuffler(dataModel);
 
         //max thread num set to n^0.25 as suggested by hogwild! paper
@@ -259,7 +268,17 @@ public class ParallelSGDGraphFactorizer  extends AbstractFactorizer {
         double[] itemVector = itemVectors[itemIndex];
 
         double prediction = dot(userVector, itemVector);
-        double err = preference.getValue() - prediction;
+        float rating = preference.getValue();
+        float statement;
+        try {
+            statement = Math.min(0,1-dataModel.getPreferencesForItem(preference.getItemID()).length()/avgOccurrence);
+        } catch (TasteException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        float replacedRating= ((rating/ratingScale)*rating)+(((ratingScale-rating)/ratingScale)*rating
+                *statement);
+        double err = replacedRating - prediction;
 
         // adjust features
         for (int k = FEATURE_OFFSET; k < rank; k++) {

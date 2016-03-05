@@ -2,22 +2,20 @@ package scr.baseRecommender;
 
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.recommender.Recommender;
-
 import scr.AbstractTest;
 import scr.baseRecommender.generic.BaseRecommender;
 import scr.ratingManipulation.purposed.AggregateGraphRecommender;
-import scr.ratingManipulation.purposed.RMRecommender;
 
 
 /**
  * Unit test for RMRecommender.
  */
-public class RMTest extends AbstractTest
+public class AggregateGraphTest extends AbstractTest
 {
 
-	public RMTest(BaseRecommender baseRecommender){
+	public AggregateGraphTest(BaseRecommender baseRecommender){
 		this.baseRecommender=baseRecommender;
-		this.displayName="RM";
+		this.displayName="Graph";
 	}
 	@Override
 	public double getMinThreshold() { return 0; }
@@ -28,6 +26,6 @@ public class RMTest extends AbstractTest
 
 	@Override
 	public Recommender getRecommender(Recommender baseRecommender, double threshold) throws TasteException {
-		return new RMRecommender(baseRecommender, threshold);
+		return new AggregateGraphRecommender(baseRecommender, threshold);
 	}
 }

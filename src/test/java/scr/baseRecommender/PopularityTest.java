@@ -19,7 +19,10 @@ import scr.ratingManipulation.AverageRatingRecommender;
 public  class PopularityTest extends AbstractTest
 {
 
-	public PopularityTest(BaseRecommender baseRecommender){this.baseRecommender=baseRecommender;}
+	public PopularityTest(BaseRecommender baseRecommender){
+		this.baseRecommender=baseRecommender;
+		this.displayName="Popularity";
+	}
 	/**
 	 * keeps average rating of items
 	 */

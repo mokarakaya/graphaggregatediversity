@@ -38,6 +38,7 @@ public abstract class AbstractTest  implements BaseRecommender,Runnable
 {
 	public BaseRecommender baseRecommender;
 	public Map<String,Map<Double,Double>> returnMap;
+	public String displayName;
 
 	@Override
 	public void run() {

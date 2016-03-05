@@ -21,7 +21,10 @@ import scr.ratingManipulation.AverageRatingRecommender;
  */
 public class AverageRatingTest extends AbstractTest
 {
-	public AverageRatingTest(BaseRecommender baseRecommender){this.baseRecommender=baseRecommender;}
+	public AverageRatingTest(BaseRecommender baseRecommender){
+		this.baseRecommender=baseRecommender;
+		this.displayName="AverageRating";
+	}
 	/**
 	 * keeps average rating of items
 	 */

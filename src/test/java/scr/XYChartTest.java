@@ -15,39 +15,35 @@ import scr.draw.XYChartCreator;
 import scr.draw.XYChartModel;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by p.bell on 11.07.2015.
  */
 public class XYChartTest {
 
-    public void testApp(String title,RMTest rmTest, PopularityTest popularityTest,AverageRatingTest averageRatingTest) throws IOException, TasteException, InterruptedException {
+    public void testApp(String title,List<AbstractTest> tests) throws IOException, TasteException, InterruptedException {
         // Because we need to init the JavaFX toolkit - which usually Application.launch does
         // I'm not sure if this way of launching has any effect on anything
         new JFXPanel();
-        Thread rmTestThread = new Thread(rmTest);
-        rmTestThread.start();
+        List<Thread>threads= new ArrayList<>();
+        for(AbstractTest test: tests){
+            Thread thread = new Thread(test);
+            thread.start();
+            threads.add(thread);
+        }
 
-        Thread popularityThread=new Thread(popularityTest);
-        popularityThread.start();
+        for(Thread thread: threads){
+            thread.join();
+        }
 
-        Thread averageRatingThread= new Thread(averageRatingTest);
-        averageRatingThread.start();
-
-        rmTestThread.join();
-        popularityThread.join();
-        averageRatingThread.join();
-
-        Iterator<String> iterator = rmTest.returnMap.keySet().iterator();
+        Iterator<String> iterator = tests.get(0).returnMap.keySet().iterator();
         while(iterator.hasNext()){
             String key=iterator.next();
             Map<String,Map<Double,Double>> map= new HashMap<>();
-            map.put("RM",rmTest.returnMap.get(key));
-            map.put("Popularity", popularityTest.returnMap.get(key));
-            map.put("AverageRating",averageRatingTest.returnMap.get(key));
+            for(AbstractTest test: tests){
+                map.put(test.displayName,test.returnMap.get(key));
+            }
             XYChartModel model=new XYChartModel();
             model.title=title;
             model.xAxisLabel="precision";
