@@ -20,9 +20,9 @@ public class AggregateGraphTest extends AbstractTest
 	@Override
 	public double getMinThreshold() { return 0; }
 	@Override
-	public double getMaxThreshold() { return 1; }
+	public double getMaxThreshold() { return 10; }
 	@Override
-	public double getIncThreshold() { return 0.1; }//
+	public double getIncThreshold() { return 1; }//
 
 	@Override
 	public Recommender getRecommender(Recommender baseRecommender, double threshold) throws TasteException {

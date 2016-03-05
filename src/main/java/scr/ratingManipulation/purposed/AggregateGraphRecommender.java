@@ -46,7 +46,7 @@ public class AggregateGraphRecommender extends RMRecommender{
         for(int itemIndex=0;itemIndex<recommend.size();itemIndex++){
             RecommendedItem item= recommend.get(itemIndex);
             long itemID = item.getItemID();
-            for(int i=0;i<threshold*10;i++) {
+            for(int i=0;i<threshold;i++) {
                 int totalCooc=0;
                 Map<Long, Integer> cooccurence = getCooccurences(itemID);
                 Map<Long, Integer> coocs=new HashMap<>();

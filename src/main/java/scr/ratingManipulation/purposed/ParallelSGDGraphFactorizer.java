@@ -64,11 +64,13 @@ public class ParallelSGDGraphFactorizer  extends AbstractFactorizer {
     private static final double NOISE = 0.02;
     private float ratingScale;
     private int avgOccurrence;
-
+    private final double threshold;
+    private static final float  ONE=1;
     private static final Logger logger = LoggerFactory.getLogger(ParallelSGDGraphFactorizer.class);
-    public ParallelSGDGraphFactorizer(DataModel dataModel, int numFeatures, double lambda, int numEpochs)
+    public ParallelSGDGraphFactorizer(DataModel dataModel, int numFeatures, double lambda, int numEpochs,final double threshold)
             throws TasteException {
         super(dataModel);
+        this.threshold=threshold;
         this.dataModel = dataModel;
         this.rank = numFeatures + FEATURE_OFFSET;
         this.lambda = lambda;
@@ -271,14 +273,13 @@ public class ParallelSGDGraphFactorizer  extends AbstractFactorizer {
         float rating = preference.getValue();
         float statement;
         try {
-            statement = Math.max(0, 1 - ((float)dataModel.getPreferencesForItem(preference.getItemID()).length() / avgOccurrence));
+            statement = Math.max(0, ONE - ((float)dataModel.getPreferencesForItem(preference.getItemID()).length() / avgOccurrence));
         } catch (TasteException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-
-        float replacedRating= ((rating/ratingScale)*rating)+(((ratingScale-rating)/ratingScale)*rating
-                *statement);
+        float ratingWithTh = (float) Math.pow((rating / ratingScale), threshold);
+        float replacedRating= (ratingWithTh *rating)+((ONE-ratingWithTh)*rating *statement);
         double err = replacedRating - prediction;
 
         // adjust features

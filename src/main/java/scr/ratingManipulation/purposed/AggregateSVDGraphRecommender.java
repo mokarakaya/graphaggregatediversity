@@ -22,12 +22,12 @@ import java.util.List;
 public class AggregateSVDGraphRecommender extends AbstractRecommender {
 
     private Recommender recommender;
-    public AggregateSVDGraphRecommender(DataModel dataModel, CandidateItemsStrategy candidateItemsStrategy) throws TasteException {
+    public AggregateSVDGraphRecommender(DataModel dataModel, CandidateItemsStrategy candidateItemsStrategy,double threshold) throws TasteException {
         super(dataModel, candidateItemsStrategy);
         int numFeatures=100;
         float lambda=new Float( 0.02);
         int numEpochs=20;
-        ParallelSGDGraphFactorizer factorizer=new ParallelSGDGraphFactorizer(dataModel, numFeatures, lambda, numEpochs);
+        ParallelSGDGraphFactorizer factorizer=new ParallelSGDGraphFactorizer(dataModel, numFeatures, lambda, numEpochs,threshold);
         this.recommender=new SVDRecommender(dataModel,factorizer,candidateItemsStrategy);
     }
 
