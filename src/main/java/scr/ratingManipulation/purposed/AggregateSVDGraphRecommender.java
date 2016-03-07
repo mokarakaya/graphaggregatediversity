@@ -15,6 +15,7 @@ import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,7 @@ public class AggregateSVDGraphRecommender extends AbstractRecommender {
     private double mu0 = 0.01;
     public AggregateSVDGraphRecommender(DataModel dataModel, CandidateItemsStrategy candidateItemsStrategy,double threshold) throws TasteException {
         super(dataModel, candidateItemsStrategy);
+        counter=new HashMap<>();
         int numFeatures=100;
         float lambda=new Float( 0.02);
         int numEpochs=20;

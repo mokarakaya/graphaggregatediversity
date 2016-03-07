@@ -25,7 +25,7 @@ public class SVDRunner extends TestCase implements  Runner{
         List<AbstractTest>tests=new ArrayList<>();
         tests.add(new AggregateSVDGraphTest(baseRecommender));
         tests.add(new AggregateGraphTest(baseRecommender));
-        tests.add(new RMTest(baseRecommender));
+        //tests.add(new RMTest(baseRecommender));
         tests.add(new PopularityTest(baseRecommender));
         tests.add(new AverageRatingTest(baseRecommender));
         test.testApp("SVD "+DATA, tests);
