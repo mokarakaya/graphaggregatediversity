@@ -11,6 +11,7 @@ import org.apache.mahout.cf.taste.recommender.Recommender;
 import scr.AbstractTest;
 import scr.baseRecommender.generic.BaseRecommender;
 import scr.ratingManipulation.AverageRatingRecommender;
+import scr.runner.Runner;
 
 
 /**
@@ -28,11 +29,47 @@ public  class PopularityTest extends AbstractTest
 	 */
 	private static Map<Long, Float> map = null;
 	@Override
-	public double getMinThreshold() { return 3; }
+	public double getMinThreshold() {
+		switch(Runner.DATA){
+			case "Movielens":{
+				return 3;
+			}case "Movielens100K":{
+				return 3;
+			}case "Bookcrossing":{
+				return 6;
+			}default:{
+				throw new RuntimeException("th for dataset not found");
+			}
+		}
+	}
 	@Override
-	public double getMaxThreshold() { return 5.4; }
+	public double getMaxThreshold() {
+		switch(Runner.DATA){
+			case "Movielens":{
+				return 5.4;
+			}case "Movielens100K":{
+				return 5.4;
+			}case "Bookcrossing":{
+				return 10.8;
+			}default:{
+				throw new RuntimeException("th for dataset not found");
+			}
+		}
+	}
 	@Override
-	public double getIncThreshold() { return 0.2; }//
+	public double getIncThreshold() {
+		switch(Runner.DATA){
+			case "Movielens":{
+				return 0.2;
+			}case "Movielens100K":{
+				return 0.2;
+			}case "Bookcrossing":{
+				return 0.4;
+			}default:{
+				throw new RuntimeException("th for dataset not found");
+			}
+		}
+	}
 
 	@Override
 	public Recommender getRecommender(Recommender recommender, double threshold) throws TasteException {

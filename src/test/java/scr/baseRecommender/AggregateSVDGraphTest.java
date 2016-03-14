@@ -7,6 +7,7 @@ import scr.AbstractTest;
 import scr.baseRecommender.generic.BaseRecommender;
 import scr.ratingManipulation.purposed.AggregateGraphRecommender;
 import scr.ratingManipulation.purposed.AggregateSVDGraphRecommender;
+import scr.runner.Runner;
 
 
 /**
@@ -20,11 +21,47 @@ public class AggregateSVDGraphTest extends AbstractTest
 		this.displayName="GraphSVD";
 	}
 	@Override
-	public double getMinThreshold() { return 0; }
+	public double getMinThreshold() {
+		switch(Runner.DATA){
+			case "Movielens":{
+				return 0;
+			}case "Movielens100K":{
+				return 0;
+			}case "Bookcrossing":{
+				return 0;
+			}default:{
+				throw new RuntimeException("th for dataset not found");
+			}
+		}
+	}
 	@Override
-	public double getMaxThreshold() { return 10; }
+	public double getMaxThreshold() {
+		switch(Runner.DATA){
+			case "Movielens":{
+				return 10;
+			}case "Movielens100K":{
+				return 10;
+			}case "Bookcrossing":{
+				return 2;
+			}default:{
+				throw new RuntimeException("th for dataset not found");
+			}
+		}
+	}
 	@Override
-	public double getIncThreshold() { return 1; }//
+	public double getIncThreshold() {
+		switch(Runner.DATA){
+			case "Movielens":{
+				return 1;
+			}case "Movielens100K":{
+				return 1;
+			}case "Bookcrossing":{
+				return 0.1;
+			}default:{
+				throw new RuntimeException("th for dataset not found");
+			}
+		}
+	}
 
 	@Override
 	public Recommender getRecommender(Recommender baseRecommender, double threshold) throws TasteException {
