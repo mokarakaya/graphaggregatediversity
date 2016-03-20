@@ -24,6 +24,11 @@ public  class PopularityTest extends AbstractTest
 		this.baseRecommender=baseRecommender;
 		this.displayName="Popularity";
 	}
+	public PopularityTest(BaseRecommender baseRecommender,int repeat){
+		this.baseRecommender=baseRecommender;
+		this.displayName="Popularity";
+		this.repeat=repeat;
+	}
 	/**
 	 * keeps average rating of items
 	 */

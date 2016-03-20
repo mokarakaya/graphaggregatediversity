@@ -17,6 +17,11 @@ public class AggregateGraphTest extends AbstractTest
 		this.baseRecommender=baseRecommender;
 		this.displayName="Graph";
 	}
+	public AggregateGraphTest(BaseRecommender baseRecommender,int repeat){
+		this.baseRecommender=baseRecommender;
+		this.displayName="Graph";
+		this.repeat=repeat;
+	}
 	@Override
 	public double getMinThreshold() { return 0; }
 	@Override

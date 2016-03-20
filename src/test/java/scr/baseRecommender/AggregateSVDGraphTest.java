@@ -19,6 +19,12 @@ public class AggregateSVDGraphTest extends AbstractTest
 	public AggregateSVDGraphTest(BaseRecommender baseRecommender){
 		this.baseRecommender=baseRecommender;
 		this.displayName="GraphSVD";
+		this.repeat=1;
+	}
+	public AggregateSVDGraphTest(BaseRecommender baseRecommender,int repeat){
+		this.baseRecommender=baseRecommender;
+		this.displayName="GraphSVD";
+		this.repeat=repeat;
 	}
 	@Override
 	public double getMinThreshold() {
@@ -42,7 +48,7 @@ public class AggregateSVDGraphTest extends AbstractTest
 			}case "Movielens100K":{
 				return 10;
 			}case "Bookcrossing":{
-				return 2;
+				return 0.8;
 			}default:{
 				throw new RuntimeException("th for dataset not found");
 			}

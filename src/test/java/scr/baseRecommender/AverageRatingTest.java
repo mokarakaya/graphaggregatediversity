@@ -25,7 +25,11 @@ public class AverageRatingTest extends AbstractTest
 	public AverageRatingTest(BaseRecommender baseRecommender){
 		this.baseRecommender=baseRecommender;
 		this.displayName="AverageRating";
-
+	}
+	public AverageRatingTest(BaseRecommender baseRecommender,int repeat){
+		this.baseRecommender=baseRecommender;
+		this.displayName="AverageRating";
+		this.repeat=repeat;
 	}
 	/**
 	 * keeps average rating of items
