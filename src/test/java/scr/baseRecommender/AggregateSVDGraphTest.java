@@ -48,7 +48,7 @@ public class AggregateSVDGraphTest extends AbstractTest
 			}case "Movielens100K":{
 				return 10;
 			}case "Bookcrossing":{
-				return 0.8;
+				return 1;
 			}default:{
 				throw new RuntimeException("th for dataset not found");
 			}
