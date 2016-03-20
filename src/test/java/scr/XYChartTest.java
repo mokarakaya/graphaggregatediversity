@@ -14,7 +14,12 @@ import scr.baseRecommender.generic.ItemBasedBaseRecommender;
 import scr.draw.XYChartCreator;
 import scr.draw.XYChartModel;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -37,12 +42,14 @@ public class XYChartTest {
             thread.join();
         }
 
+        XYChartDataSaver dataSaver= new XYChartDataSaver();
         Iterator<String> iterator = tests.get(0).returnMap.keySet().iterator();
         while(iterator.hasNext()){
             String key=iterator.next();
+            dataSaver.saveData(tests,key,title);
             Map<String,Map<Double,Double>> map= new HashMap<>();
             for(AbstractTest test: tests){
-                map.put(test.displayName,test.returnMap.get(key));
+                map.put(test.displayName, test.returnMap.get(key));
             }
             XYChartModel model=new XYChartModel();
             model.title=title;
@@ -70,6 +77,8 @@ public class XYChartTest {
         //graphs should be rendered in 10000000 milis
         Thread.sleep(10000000);
     }
+
+
 
 
 }

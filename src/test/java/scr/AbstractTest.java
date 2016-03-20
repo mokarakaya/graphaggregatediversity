@@ -63,7 +63,8 @@ public abstract class AbstractTest  implements BaseRecommender,Runnable
     	DataModel dataModel= new FileDataModel(new File("C:/javafx/data/"+ Runner.DATA+".data"));
 		returnMapInternalTotal=new HashMap<>();
     	double evaluationPercentage=0.9;
-		if(repeat==0){
+		//min value is 1
+		if(repeat<1){
 			repeat=1;
 		}
 		for(int k=0;k<repeat;k++) {
