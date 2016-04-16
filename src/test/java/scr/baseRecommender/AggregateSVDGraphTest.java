@@ -28,43 +28,27 @@ public class AggregateSVDGraphTest extends AbstractTest
 	}
 	@Override
 	public double getMinThreshold() {
-		switch(Runner.DATA){
-			case "Movielens":{
-				return 0;
-			}case "Movielens100K":{
-				return 0;
-			}case "Bookcrossing":{
-				return 0;
-			}default:{
-				throw new RuntimeException("th for dataset not found");
-			}
-		}
+		return 0;
 	}
 	@Override
 	public double getMaxThreshold() {
 		switch(Runner.DATA){
-			case "Movielens":{
-				return 10;
-			}case "Movielens100K":{
-				return 10;
-			}case "Bookcrossing":{
+			case "Bookcrossing":
+			case "Yahoo Music":{
 				return 1;
 			}default:{
-				throw new RuntimeException("th for dataset not found");
+				return 10;
 			}
 		}
 	}
 	@Override
 	public double getIncThreshold() {
 		switch(Runner.DATA){
-			case "Movielens":{
-				return 1;
-			}case "Movielens100K":{
-				return 1;
-			}case "Bookcrossing":{
+			case "Bookcrossing":
+			case "Yahoo Music":{
 				return 0.1;
 			}default:{
-				throw new RuntimeException("th for dataset not found");
+				return 1;
 			}
 		}
 	}

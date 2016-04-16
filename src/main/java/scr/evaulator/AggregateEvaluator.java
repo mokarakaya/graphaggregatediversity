@@ -3,6 +3,7 @@ package scr.evaulator;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
 import org.apache.mahout.cf.taste.model.DataModel;
+import scr.MathOperations;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -36,7 +37,7 @@ public class AggregateEvaluator {
                 giniDiversityMap.put(itemId,aggregateDiversityMap.get(itemId));
             }
         }
-        List<Long> sortedGiniDiversityList = scr.Math.sortByValueAsc(giniDiversityMap);
+        List<Long> sortedGiniDiversityList = MathOperations.sortByValueAsc(giniDiversityMap);
         double candidateItems = dataModel.getNumItems() + 1;
         double numberOfUsers=testDataModel.getNumUsers()*at;
         int count=1;

@@ -4,10 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.RunnableFuture;
-
-import junit.framework.TestCase;
 
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.eval.RecommenderBuilder;
@@ -42,6 +38,7 @@ public abstract class AbstractTest  implements BaseRecommender,Runnable
 	public Map<Integer,Map<String,Map<Double,Double>>> returnMapInternalTotal;
 	public String displayName;
 	public int repeat;
+
 
 	@Override
 	public void run() {
@@ -164,7 +161,7 @@ public abstract class AbstractTest  implements BaseRecommender,Runnable
 	private void splitPrefs(double evaluationPercentage, DataModel dataModel,FastByIDMap<PreferenceArray> trainingPrefs
     		,FastByIDMap<PreferenceArray> testPrefs ) throws TasteException{
          
-    	Random random = RandomUtils.getRandom();
+    	Random random = RandomUtils.getRandom(MathOperations.SEED);
         LongPrimitiveIterator it = dataModel.getUserIDs();
          while (it.hasNext()) {
              long userID = it.nextLong();

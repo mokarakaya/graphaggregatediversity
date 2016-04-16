@@ -36,42 +36,30 @@ public  class PopularityTest extends AbstractTest
 	@Override
 	public double getMinThreshold() {
 		switch(Runner.DATA){
-			case "Movielens":{
-				return 3;
-			}case "Movielens100K":{
-				return 3;
-			}case "Bookcrossing":{
+			case "Bookcrossing":{
 				return 6;
 			}default:{
-				throw new RuntimeException("th for dataset not found");
+				return 3;
 			}
 		}
 	}
 	@Override
 	public double getMaxThreshold() {
 		switch(Runner.DATA){
-			case "Movielens":{
-				return 5.4;
-			}case "Movielens100K":{
-				return 5.4;
-			}case "Bookcrossing":{
+			case "Bookcrossing":{
 				return 10.8;
 			}default:{
-				throw new RuntimeException("th for dataset not found");
+				return 5.4;
 			}
 		}
 	}
 	@Override
 	public double getIncThreshold() {
 		switch(Runner.DATA){
-			case "Movielens":{
-				return 0.2;
-			}case "Movielens100K":{
-				return 0.2;
-			}case "Bookcrossing":{
+			case "Bookcrossing":{
 				return 0.4;
 			}default:{
-				throw new RuntimeException("th for dataset not found");
+				return 0.2;
 			}
 		}
 	}

@@ -5,7 +5,8 @@ import java.util.*;
 /**
  * Created by p.bell on 19.04.2015.
  */
-public class Math {
+public class MathOperations {
+    public static final long SEED=13;
     public static List sortByValueAsc(final Map m) {
         List keys = new ArrayList();
         keys.addAll(m.keySet());
