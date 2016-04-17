@@ -42,7 +42,7 @@ public class AggregateGraphRecommender extends RMRecommender{
     //TODO: we should add counter to the game.
     protected List<RecommendedItem> manipulate(List<RecommendedItem> recommend) throws TasteException {
         List<RecommendedItem> result= new ArrayList<RecommendedItem>();
-        Random random = new Random(MathOperations.SEED);
+        Random random = new Random();
         for(int itemIndex=0;itemIndex<recommend.size();itemIndex++){
             RecommendedItem item= recommend.get(itemIndex);
             long itemID = item.getItemID();

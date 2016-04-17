@@ -161,7 +161,7 @@ public abstract class AbstractTest  implements BaseRecommender,Runnable
 	private void splitPrefs(double evaluationPercentage, DataModel dataModel,FastByIDMap<PreferenceArray> trainingPrefs
     		,FastByIDMap<PreferenceArray> testPrefs ) throws TasteException{
          
-    	Random random = RandomUtils.getRandom(MathOperations.SEED);
+    	Random random = RandomUtils.getRandom();
         LongPrimitiveIterator it = dataModel.getUserIDs();
          while (it.hasNext()) {
              long userID = it.nextLong();

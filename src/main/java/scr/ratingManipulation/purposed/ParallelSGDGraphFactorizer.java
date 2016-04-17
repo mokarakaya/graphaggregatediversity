@@ -1,5 +1,6 @@
 package scr.ratingManipulation.purposed;
 
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -17,6 +18,7 @@ import org.apache.mahout.common.RandomUtils;
 import org.apache.mahout.common.RandomWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import scr.MathOperations;
 
 /**
  * Created by p.bell on 02.03.2016.
@@ -93,7 +95,7 @@ public class ParallelSGDGraphFactorizer  extends AbstractFactorizer {
         private Preference[] preferences;
         private Preference[] unstagedPreferences;
 
-        protected final RandomWrapper random = RandomUtils.getRandom();
+        protected final Random random = RandomUtils.getRandom();
 
         public PreferenceShuffler(DataModel dataModel) throws TasteException {
             cachePreferences(dataModel);
@@ -158,7 +160,7 @@ public class ParallelSGDGraphFactorizer  extends AbstractFactorizer {
     }
 
     protected void initialize() throws TasteException {
-        RandomWrapper random = RandomUtils.getRandom();
+        Random random = RandomUtils.getRandom();
         userVectors = new double[dataModel.getNumUsers()][rank];
         itemVectors = new double[dataModel.getNumItems()][rank];
 
