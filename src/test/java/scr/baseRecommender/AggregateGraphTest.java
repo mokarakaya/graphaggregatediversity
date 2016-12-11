@@ -4,7 +4,7 @@ import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 import scr.AbstractTest;
 import scr.baseRecommender.generic.BaseRecommender;
-import scr.ratingManipulation.purposed.AggregateGraphRecommender;
+import scr.ratingManipulation.proposed.AggregateGraphRecommender;
 
 
 /**

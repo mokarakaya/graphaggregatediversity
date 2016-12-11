@@ -1,4 +1,4 @@
-package scr.ratingManipulation.purposed;
+package scr.ratingManipulation.proposed;
 
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.recommender.GenericRecommendedItem;
@@ -7,7 +7,6 @@ import org.apache.mahout.cf.taste.model.PreferenceArray;
 import org.apache.mahout.cf.taste.recommender.IDRescorer;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.Recommender;
-import scr.*;
 
 import java.util.*;
 

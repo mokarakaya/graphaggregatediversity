@@ -5,8 +5,7 @@ import org.apache.mahout.cf.taste.impl.recommender.AllUnknownItemsCandidateItems
 import org.apache.mahout.cf.taste.recommender.Recommender;
 import scr.AbstractTest;
 import scr.baseRecommender.generic.BaseRecommender;
-import scr.ratingManipulation.purposed.AggregateGraphRecommender;
-import scr.ratingManipulation.purposed.AggregateSVDGraphRecommender;
+import scr.ratingManipulation.proposed.AggregateSVDGraphRecommender;
 import scr.runner.Runner;
 
 

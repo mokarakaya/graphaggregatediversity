@@ -1,4 +1,4 @@
-package scr.ratingManipulation.purposed;
+package scr.ratingManipulation.proposed;
 
 import java.util.ArrayList;
 import java.util.Collection;

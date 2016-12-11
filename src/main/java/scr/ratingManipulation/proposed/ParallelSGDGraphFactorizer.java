@@ -1,4 +1,4 @@
-package scr.ratingManipulation.purposed;
+package scr.ratingManipulation.proposed;
 
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -15,10 +15,8 @@ import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.model.Preference;
 import org.apache.mahout.cf.taste.model.PreferenceArray;
 import org.apache.mahout.common.RandomUtils;
-import org.apache.mahout.common.RandomWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import scr.MathOperations;
 
 /**
  * Created by p.bell on 02.03.2016.
