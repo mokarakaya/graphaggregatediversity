@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Created by p.bell on 06.10.2015.
+ * Created by mokarakaya on 06.10.2015.
  */
 public class LongTailGraph {
 

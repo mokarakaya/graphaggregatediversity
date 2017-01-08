@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by p.bell on 02.03.2016.
+ * Created by mokarakaya on 02.03.2016.
  */
 public class AggregateSVDGraphRecommender extends AbstractRecommender {
 

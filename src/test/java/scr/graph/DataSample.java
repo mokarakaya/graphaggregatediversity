@@ -12,7 +12,7 @@ import java.util.Random;
 import java.util.stream.Stream;
 
 /**
- * Created by p.bell on 16.04.2016.
+ * Created by mokarakaya on 16.04.2016.
  */
 public class DataSample {
     static int count=0;

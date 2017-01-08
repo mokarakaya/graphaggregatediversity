@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by p.bell on 27.06.2015.
+ * Created by mokarakaya on 27.06.2015.
  */
 public class AggregateEvaluator {
 

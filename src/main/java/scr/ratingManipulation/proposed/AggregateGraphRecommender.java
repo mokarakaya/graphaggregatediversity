@@ -11,7 +11,7 @@ import org.apache.mahout.cf.taste.recommender.Recommender;
 import java.util.*;
 
 /**
- * Created by p.bell on 02.01.2016.
+ * Created by mokarakaya on 02.01.2016.
  */
 public class AggregateGraphRecommender extends RMRecommender{
 

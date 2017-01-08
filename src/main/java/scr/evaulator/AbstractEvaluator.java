@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 /**
- * Created by p.bell on 22.06.2015.
+ * Created by mokarakaya on 22.06.2015.
  */
 public abstract class AbstractEvaluator {
     protected BigDecimal total;

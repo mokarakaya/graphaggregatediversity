@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by p.bell on 12.07.2015.
+ * Created by mokarakaya on 12.07.2015.
  */
 public class SVDRunner extends TestCase implements  Runner{
 

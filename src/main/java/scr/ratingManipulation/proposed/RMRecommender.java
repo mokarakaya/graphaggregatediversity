@@ -18,7 +18,7 @@ import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 
 /**
- * Created by p.bell on 07.04.2015.
+ * Created by mokarakaya on 07.04.2015.
  * newly introduced rating manuplation method
  */
 public class RMRecommender extends AbstractRecommender{

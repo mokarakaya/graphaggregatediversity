@@ -16,7 +16,7 @@ import org.apache.mahout.cf.taste.similarity.ItemSimilarity;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 
 /**
- * Created by p.bell on 11.07.2015.
+ * Created by mokarakaya on 11.07.2015.
  */
 public class UserBasedBaseRecommender implements BaseRecommender{
 

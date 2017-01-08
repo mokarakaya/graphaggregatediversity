@@ -5,7 +5,7 @@ import org.apache.mahout.cf.taste.common.TasteException;
 import java.io.IOException;
 
 /**
- * Created by p.bell on 26.07.2015.
+ * Created by mokarakaya on 26.07.2015.
  */
 public interface Runner {
     //String DATA="Movielens";

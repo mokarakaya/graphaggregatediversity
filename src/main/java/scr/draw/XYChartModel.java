@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by p.bell on 12.07.2015.
+ * Created by mokarakaya on 12.07.2015.
  */
 public class XYChartModel {
 

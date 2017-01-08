@@ -12,7 +12,7 @@ import org.apache.mahout.cf.taste.recommender.Recommender;
 import org.apache.mahout.cf.taste.similarity.ItemSimilarity;
 
 /**
- * Created by p.bell on 06.07.2015.
+ * Created by mokarakaya on 06.07.2015.
  */
 public class ItemBasedBaseRecommender implements BaseRecommender {
 

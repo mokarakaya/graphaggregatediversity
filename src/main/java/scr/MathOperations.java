@@ -3,7 +3,7 @@ package scr;
 import java.util.*;
 
 /**
- * Created by p.bell on 19.04.2015.
+ * Created by mokarakaya on 19.04.2015.
  */
 public class MathOperations {
     //public static final long SEED=23;

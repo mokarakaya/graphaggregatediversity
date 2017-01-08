@@ -23,7 +23,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 /**
- * Created by p.bell on 11.07.2015.
+ * Created by mokarakaya on 11.07.2015.
  */
 public class XYChartTest {
 
