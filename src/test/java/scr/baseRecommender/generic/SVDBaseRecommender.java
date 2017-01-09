@@ -18,7 +18,13 @@ public class SVDBaseRecommender implements BaseRecommender {
         int numFeatures=100;
         float lambda=new Float( 0.02);
         int numEpochs=20;
-        ParallelSGDFactorizer factorizer=new ParallelSGDFactorizer(dataModel, numFeatures, lambda, numEpochs);
+        double mu0=0.01;
+        double decayFactor=1.0;
+        int stepOffset=0;
+        double forgettingExponent=0.0;
+        int numThreads=4;
+        ParallelSGDFactorizer factorizer=new ParallelSGDFactorizer(dataModel, numFeatures, lambda, numEpochs,
+        mu0,decayFactor, stepOffset, forgettingExponent,numThreads);
         SVDRecommender recommender =new SVDRecommender(dataModel,factorizer,new AllUnknownItemsCandidateItemsStrategy());
         return recommender;
     }
