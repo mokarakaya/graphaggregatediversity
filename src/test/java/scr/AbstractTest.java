@@ -127,9 +127,7 @@ public abstract class AbstractTest  implements BaseRecommender,Runnable
 			Iterator<String> iterator = result.keySet().iterator();
 			while(iterator.hasNext()){
 				String key= iterator.next();
-				if(returnMap.get(key)==null){
-					returnMap.put(key,new HashMap<Double,Double>());
-				}
+				returnMap.putIfAbsent(key,new HashMap<>());
 				Map<Double, Double> resultMetric = result.get(key);
 				if(returnMap.get(key).size()==0){
 					returnMap.put(key,resultMetric);
