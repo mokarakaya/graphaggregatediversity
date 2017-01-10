@@ -21,6 +21,7 @@ public class AggregateEvaluator {
     public static final String HERF = "herf";
     public static final String ENTROPY= "entropy";
     public static final String AGGREGATE="aggregate";
+    public static final String INDDIVERSITY= "individual diversity";
     public Map<String,BigDecimal> getResult(DataModel dataModel, int at, Map<Long, Integer> aggregateDiversityMap, DataModel testDataModel) throws TasteException {
 
 

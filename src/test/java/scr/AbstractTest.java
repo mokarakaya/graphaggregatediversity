@@ -110,6 +110,11 @@ public abstract class AbstractTest  implements BaseRecommender,Runnable
 				}
 				returnMapInternal.get(AggregateEvaluator.ENTROPY).put(evaluate.getPrecision(), aggregateMap.get(AggregateEvaluator.ENTROPY).doubleValue());
 
+				if (returnMapInternal.get(AggregateEvaluator.INDDIVERSITY) == null) {
+					returnMapInternal.put(AggregateEvaluator.INDDIVERSITY, new HashMap<Double, Double>());
+				}
+				returnMapInternal.get(AggregateEvaluator.INDDIVERSITY).put(evaluate.getPrecision(), evaluate.getIndividualDiversity());
+
 				System.out.println(this.getClass().getSimpleName() + ";"+k +";"+ i + ";" + evaluate.getPrecision() + ";" + evaluate.getAggregateDiversity() + ";" +
 						aggregateMap.get(AggregateEvaluator.GINI) + ";" + aggregateMap.get(AggregateEvaluator.HERF) + ";" +
 						aggregateMap.get(AggregateEvaluator.ENTROPY));
@@ -120,6 +125,7 @@ public abstract class AbstractTest  implements BaseRecommender,Runnable
 
     }
 
+    // TODO: should get average score of all runs
 	private void generateReturnMap(){
 		returnMap=new HashMap<>();
 		for(int  i=0;i<repeat;i++){

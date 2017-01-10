@@ -8,6 +8,7 @@ import java.util.Map;
 public interface RMIRStatistics extends IRStatistics{
 
 	double getAggregateDiversity();
+	double getIndividualDiversity();
 
 	Map<String,BigDecimal> getAggregateMap();
 }

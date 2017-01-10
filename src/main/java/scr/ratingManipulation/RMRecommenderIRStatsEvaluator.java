@@ -27,11 +27,13 @@ import org.apache.mahout.cf.taste.model.PreferenceArray;
 import org.apache.mahout.cf.taste.recommender.IDRescorer;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.Recommender;
+import org.apache.mahout.math.hadoop.similarity.cooccurrence.measures.CosineSimilarity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Preconditions;
 import scr.evaulator.AggregateEvaluator;
+import scr.evaulator.CosineSimilarityCached;
 
 /**
  * This is a faster version of Apache Mahout evaluator since it can use existing dataset without any maniplation
@@ -88,7 +90,8 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
         DataModel testDataModel = new GenericDataModel(testPrefs);
         Recommender recommender = recommenderBuilder.buildRecommender(trainingDataModel);
         LongPrimitiveIterator ite = testDataModel.getUserIDs();
-
+        double totalIndividualDiversity=0;
+        int totalCount=0;
         while (ite.hasNext()) {
 
             long userID = ite.nextLong();
@@ -121,6 +124,20 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
                 }
             }
 
+            //calculation for individual diversity
+            CosineSimilarityCached similarityCached=new CosineSimilarityCached(dataModel);
+            int count=0;
+            double individualDiversity=0;
+
+            for(int i=0;i<recommendedItems.size();i++){
+                for(int j=i+1 ;j<recommendedItems.size();j++){
+                    double similarity=similarityCached.getSimilarity(recommendedItems.get(i).getItemID(),recommendedItems.get(j).getItemID());
+                    individualDiversity+= (1.0- similarity);
+                    count++;
+                }
+            }
+            totalIndividualDiversity+=individualDiversity/count;
+            totalCount++;
             int numRecommendedItems = recommendedItems.size();
 
             // Precision
@@ -137,7 +154,7 @@ public final class RMRecommenderIRStatsEvaluator implements RecommenderIRStatsEv
                 fallOut.getAverage(),
                 nDCG.getAverage(),
                 (double) numUsersWithRecommendations / (double) numUsersRecommendedFor,
-                aggregateDiversityMap.size(), resultMap);
+                aggregateDiversityMap.size(), resultMap,totalIndividualDiversity/totalCount);
     }
 
 

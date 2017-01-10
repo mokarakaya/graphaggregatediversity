@@ -31,9 +31,12 @@ public final class RMIRStatisticsImpl implements RMIRStatistics, Serializable {
     private final double fallOut;
     private final double ndcg;
     private final double reach;
+    private final double individualDiversity;
     private final Map<String,BigDecimal> aggregateMap;
 
-    RMIRStatisticsImpl(double precision, double recall, double fallOut, double ndcg, double reach, double aggregateDiversity, Map<String,BigDecimal> aggregateMap) {
+    RMIRStatisticsImpl(double precision, double recall, double fallOut, double ndcg, double reach,
+                       double aggregateDiversity, Map<String,BigDecimal> aggregateMap,double individualDiversity) {
+        this.individualDiversity=individualDiversity;
         this.aggregateMap=aggregateMap;
         Preconditions.checkArgument(Double.isNaN(precision) || (precision >= 0.0 && precision <= 1.0),
                 "Illegal precision: " + precision);
@@ -97,6 +100,11 @@ public final class RMIRStatisticsImpl implements RMIRStatistics, Serializable {
 	public double getAggregateDiversity() {
 		return aggregateDiversity;
 	}
+
+    @Override
+    public double getIndividualDiversity() {
+        return individualDiversity;
+    }
 
     @Override
     public Map<String,BigDecimal> getAggregateMap() {
