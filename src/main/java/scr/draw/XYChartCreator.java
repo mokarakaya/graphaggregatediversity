@@ -34,6 +34,13 @@ public class XYChartCreator extends Application implements Runnable {
         final NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel(model.xAxisLabel);
         yAxis.setLabel(model.yAxisLabel);
+        //TODO: adjusting lower and upperbound should be dynamic
+        if("individual diversity".equals(model.yAxisLabel)){
+            yAxis.setAutoRanging(false);
+            yAxis.setLowerBound(0.7);
+            yAxis.setUpperBound(1.1);
+            yAxis.setTickUnit(0.05);
+        }
         final javafx.scene.chart.LineChart<Number,Number> lineChart = new javafx.scene.chart.LineChart<Number,Number>(xAxis,yAxis);
         lineChart.setAnimated(false);
         lineChart.setTitle(model.title);
