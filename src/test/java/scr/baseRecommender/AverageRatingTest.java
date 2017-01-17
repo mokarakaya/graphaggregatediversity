@@ -37,7 +37,7 @@ public class AverageRatingTest extends AbstractTest
 	private static Map<Long, Float> map = null;
 	@Override
 	public double getMinThreshold() {
-		switch(Runner.DATA){
+		switch(data){
 			case "Bookcrossing":{
 				return 6;
 			}default:{
@@ -47,7 +47,7 @@ public class AverageRatingTest extends AbstractTest
 	}
 	@Override
 	public double getMaxThreshold() {
-		switch(Runner.DATA){
+		switch(data){
 			case "Bookcrossing":{
 				return 10.8;
 			}default:{
@@ -57,7 +57,7 @@ public class AverageRatingTest extends AbstractTest
 	}
 	@Override
 	public double getIncThreshold() {
-		switch(Runner.DATA){
+		switch(data){
 			case "Bookcrossing":{
 				return 0.4;
 			}default:{

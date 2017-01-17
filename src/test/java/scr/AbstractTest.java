@@ -38,12 +38,13 @@ public abstract class AbstractTest  implements BaseRecommender,Runnable
 	public Map<Integer,Map<String,Map<Double,Double>>> returnMapInternalTotal;
 	public String displayName;
 	public int repeat;
+	public String data;
 
 
 	@Override
 	public void run() {
 		try {
-			testApp();
+			testApp(data);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (TasteException e) {
@@ -55,9 +56,9 @@ public abstract class AbstractTest  implements BaseRecommender,Runnable
      * @throws IOException 
      * @throws TasteException 
      */
-    public void testApp() throws IOException, TasteException
+    public void testApp(String data) throws IOException, TasteException
     {
-    	DataModel dataModel= new FileDataModel(new File("C:/javafx/data/"+ Runner.DATA+".data"));
+    	DataModel dataModel= new FileDataModel(new File("C:/javafx/data/"+ data+".data"));
 		returnMapInternalTotal=new HashMap<>();
     	double evaluationPercentage=0.9;
 		//min value is 1

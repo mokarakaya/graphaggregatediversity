@@ -27,7 +27,7 @@ public class ItemBasedRunner extends TestCase implements  Runner{
         tests.add(new RMTest(baseRecommender));
         tests.add(new PopularityTest(baseRecommender));
         tests.add(new AverageRatingTest(baseRecommender));
-        test.testApp("Item Based "+DATA,tests);
+        //test.testApp("Item Based "+DATA,tests);
 
     }
 }

@@ -37,9 +37,9 @@ public class XYChartCreator extends Application implements Runnable {
         //TODO: adjusting lower and upperbound should be dynamic
         if("individual diversity".equals(model.yAxisLabel)){
             yAxis.setAutoRanging(false);
-            yAxis.setLowerBound(0.7);
-            yAxis.setUpperBound(1.1);
-            yAxis.setTickUnit(0.05);
+            yAxis.setLowerBound(0.9);
+            yAxis.setUpperBound(1.0);
+            yAxis.setTickUnit(0.01);
         }
         final javafx.scene.chart.LineChart<Number,Number> lineChart = new javafx.scene.chart.LineChart<Number,Number>(xAxis,yAxis);
         lineChart.setAnimated(false);

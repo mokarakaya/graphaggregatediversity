@@ -15,15 +15,17 @@ import scr.runner.Runner;
 public class AggregateSVDGraphTest extends AbstractTest
 {
 
-	public AggregateSVDGraphTest(BaseRecommender baseRecommender){
+	public AggregateSVDGraphTest(BaseRecommender baseRecommender,String data){
 		this.baseRecommender=baseRecommender;
 		this.displayName="GraphSVD";
 		this.repeat=1;
+		this.data=data;
 	}
-	public AggregateSVDGraphTest(BaseRecommender baseRecommender,int repeat){
+	public AggregateSVDGraphTest(BaseRecommender baseRecommender,String data,int repeat){
 		this.baseRecommender=baseRecommender;
 		this.displayName="GraphSVD";
 		this.repeat=repeat;
+		this.data=data;
 	}
 	@Override
 	public double getMinThreshold() {
@@ -31,7 +33,7 @@ public class AggregateSVDGraphTest extends AbstractTest
 	}
 	@Override
 	public double getMaxThreshold() {
-		switch(Runner.DATA){
+		switch(data){
 			case "Bookcrossing":
 			case "Yahoo Music":{
 				return 1;
@@ -42,7 +44,7 @@ public class AggregateSVDGraphTest extends AbstractTest
 	}
 	@Override
 	public double getIncThreshold() {
-		switch(Runner.DATA){
+		switch(data){
 			case "Bookcrossing":
 			case "Yahoo Music":{
 				return 0.1;

@@ -21,7 +21,7 @@ import java.util.*;
  * Created by mokarakaya on 06.10.2015.
  */
 public class LongTailGraph {
-
+/*
     public static void main(String [] args) throws IOException, TasteException, InterruptedException {
         LongTailGraph aggregateGraph= new LongTailGraph();
         aggregateGraph.run();
@@ -106,4 +106,5 @@ public class LongTailGraph {
         }
         return cooccurence;
     }
+    */
 }

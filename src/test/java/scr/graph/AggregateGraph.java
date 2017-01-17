@@ -26,7 +26,7 @@ import java.util.*;
  * Created by mokarakaya on 06.10.2015.
  */
 public class AggregateGraph {
-
+/*
     public static void main(String [] args) throws IOException, TasteException, InterruptedException {
         AggregateGraph aggregateGraph= new AggregateGraph();
         aggregateGraph.run();
@@ -120,4 +120,5 @@ public class AggregateGraph {
         }
         return cooccurence;
     }
+*/
 }

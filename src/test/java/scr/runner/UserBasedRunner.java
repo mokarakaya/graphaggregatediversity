@@ -27,7 +27,7 @@ public class UserBasedRunner extends TestCase implements  Runner{
         tests.add(new RMTest(baseRecommender));
         tests.add(new PopularityTest(baseRecommender));
         tests.add(new AverageRatingTest(baseRecommender));
-        test.testApp("User Based "+DATA,tests);
+        //test.testApp("User Based "+DATA,tests);
 
     }
 }

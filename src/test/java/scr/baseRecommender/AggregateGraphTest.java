@@ -13,14 +13,16 @@ import scr.ratingManipulation.proposed.AggregateGraphRecommender;
 public class AggregateGraphTest extends AbstractTest
 {
 
-	public AggregateGraphTest(BaseRecommender baseRecommender){
+	public AggregateGraphTest(BaseRecommender baseRecommender,String data){
 		this.baseRecommender=baseRecommender;
 		this.displayName="Graph";
+		this.data=data;
 	}
-	public AggregateGraphTest(BaseRecommender baseRecommender,int repeat){
+	public AggregateGraphTest(BaseRecommender baseRecommender,String data,int repeat){
 		this.baseRecommender=baseRecommender;
 		this.displayName="Graph";
 		this.repeat=repeat;
+		this.data=data;
 	}
 	@Override
 	public double getMinThreshold() { return 0; }

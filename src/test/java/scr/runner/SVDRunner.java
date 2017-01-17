@@ -20,16 +20,25 @@ import java.util.List;
 public class SVDRunner extends TestCase implements  Runner{
 
     public void testApp() throws InterruptedException, TasteException, IOException {
+
+
+
+        runTests("Movielens");
+        //runTests("Yahoo Music");
+        runTests("Bookcrossing");
+        //runTests("Movielens100K");
+
+    }
+
+    public void runTests(String data) throws InterruptedException, TasteException, IOException {
         BaseRecommender baseRecommender= new SVDBaseRecommender();
         XYChartTest test= new XYChartTest();
         List<AbstractTest>tests=new ArrayList<>();
-        tests.add(new AggregateSVDGraphTest(baseRecommender,1));
-        tests.add(new AggregateGraphTest(baseRecommender,1));
+        tests.add(new AggregateSVDGraphTest(baseRecommender,data,1));
+        tests.add(new AggregateGraphTest(baseRecommender,data,1));
         //tests.add(new RMTest(baseRecommender));
-        tests.add(new PopularityTest(baseRecommender,1));
-        tests.add(new AverageRatingTest(baseRecommender,1));
-
-        test.testApp("SVD "+DATA, tests);
-
+        //tests.add(new PopularityTest(baseRecommender,1));
+        //tests.add(new AverageRatingTest(baseRecommender,1));
+        test.testApp("SVD "+data, tests);
     }
 }
