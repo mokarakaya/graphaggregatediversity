@@ -20,14 +20,16 @@ import scr.runner.Runner;
 public  class PopularityTest extends AbstractTest
 {
 
-	public PopularityTest(BaseRecommender baseRecommender){
+	public PopularityTest(BaseRecommender baseRecommender,String data){
 		this.baseRecommender=baseRecommender;
 		this.displayName="Popularity";
+		this.data=data;
 	}
-	public PopularityTest(BaseRecommender baseRecommender,int repeat){
+	public PopularityTest(BaseRecommender baseRecommender,String data,int repeat){
 		this.baseRecommender=baseRecommender;
 		this.displayName="Popularity";
 		this.repeat=repeat;
+		this.data=data;
 	}
 	/**
 	 * keeps average rating of items

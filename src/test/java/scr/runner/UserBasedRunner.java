@@ -25,8 +25,8 @@ public class UserBasedRunner extends TestCase implements  Runner{
         XYChartTest test= new XYChartTest();
         List<AbstractTest> tests=new ArrayList<>();
         tests.add(new RMTest(baseRecommender));
-        tests.add(new PopularityTest(baseRecommender));
-        tests.add(new AverageRatingTest(baseRecommender));
+        /*tests.add(new PopularityTest(baseRecommender));
+        tests.add(new AverageRatingTest(baseRecommender));*/
         //test.testApp("User Based "+DATA,tests);
 
     }

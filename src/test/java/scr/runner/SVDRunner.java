@@ -30,7 +30,7 @@ public class SVDRunner extends TestCase implements  Runner{
         datasets.add("Yahoo Music");
         datasets.add("Bookcrossing");*/
         ExecutorService executor = Executors.newFixedThreadPool(8);
-        for(String dataset: datasets){
+        for(final String dataset: datasets){
             Runnable worker= () -> {
                 try {
                     runTests(dataset);
@@ -60,8 +60,8 @@ public class SVDRunner extends TestCase implements  Runner{
         tests.add(new AggregateSVDGraphTest(baseRecommender,data,1));
         tests.add(new AggregateGraphTest(baseRecommender,data,1));
         //tests.add(new RMTest(baseRecommender));
-        tests.add(new PopularityTest(baseRecommender,1));
-        tests.add(new AverageRatingTest(baseRecommender,1));
+        tests.add(new PopularityTest(baseRecommender,data,1));
+        tests.add(new AverageRatingTest(baseRecommender,data,1));
         test.testApp("SVD "+data, tests);
     }
 }

@@ -279,8 +279,7 @@ public class ParallelSGDGraphFactorizer  extends AbstractFactorizer {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        float ratingWithTh = (float) Math.pow((rating / ratingScale), threshold);
-        float replacedRating= (ratingWithTh *rating)+((ONE-ratingWithTh)*rating *statement);
+        float replacedRating= rating *statement;
         double err = replacedRating - prediction;
 
         // adjust features

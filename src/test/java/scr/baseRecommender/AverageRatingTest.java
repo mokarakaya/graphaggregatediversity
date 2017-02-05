@@ -22,14 +22,16 @@ import scr.runner.Runner;
  */
 public class AverageRatingTest extends AbstractTest
 {
-	public AverageRatingTest(BaseRecommender baseRecommender){
+	public AverageRatingTest(BaseRecommender baseRecommender,String data){
 		this.baseRecommender=baseRecommender;
 		this.displayName="AverageRating";
+		this.data=data;
 	}
-	public AverageRatingTest(BaseRecommender baseRecommender,int repeat){
+	public AverageRatingTest(BaseRecommender baseRecommender,String data,int repeat){
 		this.baseRecommender=baseRecommender;
 		this.displayName="AverageRating";
 		this.repeat=repeat;
+		this.data=data;
 	}
 	/**
 	 * keeps average rating of items
