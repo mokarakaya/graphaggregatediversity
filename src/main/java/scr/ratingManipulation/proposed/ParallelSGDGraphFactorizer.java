@@ -281,7 +281,7 @@ public class ParallelSGDGraphFactorizer  extends AbstractFactorizer {
         }
         /*float ratingWithTh = (float) Math.pow((rating / ratingScale), threshold);
         float replacedRating= (ratingWithTh *rating)+((ONE-ratingWithTh)*rating *statement);*/
-        float replacedRating= rating*statement;
+        float replacedRating= (float) (rating* Math.pow(statement,threshold));
         double err = replacedRating - prediction;
 
         // adjust features
