@@ -176,7 +176,7 @@ public abstract class AbstractTest  implements BaseRecommender,Runnable
              List<Preference> oneUserTestPrefs= new ArrayList<>();
              while(iterator.hasNext()){
              	Preference next = iterator.next();
-             	if (random.nextDouble() < evaluationPercentage){
+             	if (random.nextDouble() > evaluationPercentage){
              		oneUserTestPrefs.add(next);
                  }else{
                 	 oneUserTrainingPrefs.add(next);

@@ -57,11 +57,13 @@ public class SVDRunner extends TestCase implements  Runner{
         BaseRecommender baseRecommender= new SVDBaseRecommender();
         XYChartTest test= new XYChartTest();
         List<AbstractTest>tests=new ArrayList<>();
+
         tests.add(new AggregateSVDGraphTest(baseRecommender,data,1));
-        tests.add(new AggregateGraphTest(baseRecommender,data,1));
         //tests.add(new RMTest(baseRecommender));
+        /*tests.add(new AggregateGraphTest(baseRecommender,data,1));
+
         tests.add(new PopularityTest(baseRecommender,data,1));
-        tests.add(new AverageRatingTest(baseRecommender,data,1));
+        tests.add(new AverageRatingTest(baseRecommender,data,1));*/
         test.testApp("SVD "+data, tests);
     }
 }
