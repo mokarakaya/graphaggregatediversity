@@ -38,7 +38,7 @@ public class AggregateSVDGraphTest extends AbstractTest
 			case "Yahoo Music":{
 				return 1;
 			}default:{
-				return 10;
+				return 5;
 			}
 		}
 	}
@@ -49,7 +49,7 @@ public class AggregateSVDGraphTest extends AbstractTest
 			case "Yahoo Music":{
 				return 0.1;
 			}default:{
-				return 1;
+				return 0.5;
 			}
 		}
 	}

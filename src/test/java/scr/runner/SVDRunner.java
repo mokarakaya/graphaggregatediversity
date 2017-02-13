@@ -26,9 +26,9 @@ public class SVDRunner extends TestCase implements  Runner{
 
         List<String> datasets=new ArrayList<>();
         datasets.add("Movielens100K");
-        /*datasets.add("Movielens");
-        datasets.add("Yahoo Music");
-        datasets.add("Bookcrossing");*/
+        //datasets.add("Movielens");
+        //datasets.add("Yahoo Music");
+        //datasets.add("Bookcrossing");
         ExecutorService executor = Executors.newFixedThreadPool(8);
         for(final String dataset: datasets){
             Runnable worker= () -> {
