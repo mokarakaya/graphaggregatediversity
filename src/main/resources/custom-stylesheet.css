@@ -1,0 +1,15 @@
+.chart-title {
+  -fx-font-size: 2.0em;
+}
+
+.axis-label {
+  -fx-font-size: 1.8em;
+}
+
+.axis {
+    -fx-tick-length: 1;
+    -fx-minor-tick-length: 0;
+}
+.axis-tick-mark {
+    -fx-stroke-width: 1;
+}

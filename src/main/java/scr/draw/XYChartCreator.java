@@ -59,7 +59,7 @@ public class XYChartCreator extends Application implements Runnable {
             lineChart.getData().add(series);
         }
         Scene scene  = new Scene(lineChart,800, 600);
-        scene.getStylesheets().add("stylesheet.css");
+        scene.getStylesheets().add(XYChartCreator.class.getResource("/custom-stylesheet.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
         WritableImage wim = new WritableImage((int) stage.getWidth(),  (int) stage.getHeight());
