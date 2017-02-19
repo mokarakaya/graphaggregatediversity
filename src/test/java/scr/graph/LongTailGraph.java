@@ -21,15 +21,19 @@ import java.util.*;
  * Created by mokarakaya on 06.10.2015.
  */
 public class LongTailGraph {
-/*
+
     public static void main(String [] args) throws IOException, TasteException, InterruptedException {
         LongTailGraph aggregateGraph= new LongTailGraph();
-        aggregateGraph.run();
+        //datasets.add("Movielens100K");
+        //datasets.add("Movielens");
+        //datasets.add("Yahoo Music");
+        //datasets.add("Bookcrossing");
+        aggregateGraph.run("Movielens100K");
 
     }
 
-    private  void run() throws IOException, TasteException, InterruptedException {
-        DataModel dataModel= new FileDataModel(new File("C:/javafx/data/"+ Runner.DATA+".data"));
+    private  void run(String data) throws IOException, TasteException, InterruptedException {
+        DataModel dataModel= new FileDataModel(new File("C:/javafx/data/"+ data+".data"));
         List<Double> tempList= new ArrayList<>();
         LongPrimitiveIterator itemIDs = dataModel.getItemIDs();
         while(itemIDs.hasNext()){
@@ -38,14 +42,14 @@ public class LongTailGraph {
             tempList.add(numUsersWithPreferenceFor);
         }
         Map<Double,Double> map=sumCoocs(tempList);
-        generateGraph(map);
+        generateGraph(map,data);
     }
 
-    private void generateGraph(Map<Double, Double> map) throws IOException, InterruptedException {
+    private void generateGraph(Map<Double, Double> map,String data) throws IOException, InterruptedException {
         XYChartModel model= new XYChartModel();
-        model.title=Runner.DATA;
+        model.title=data;
         Map<String,Map<Double,Double>>  series= new HashMap<>();
-        series.put(Runner.DATA,map);
+        series.put(data,map);
         model.series= series;
         model.xAxisLabel="sorted by ratings";
         model.yAxisLabel="# of ratings";
@@ -106,5 +110,5 @@ public class LongTailGraph {
         }
         return cooccurence;
     }
-    */
+
 }
