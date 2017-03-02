@@ -3,23 +3,14 @@ package scr;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.stage.Stage;
-import junit.framework.TestCase;
 import org.apache.mahout.cf.taste.common.TasteException;
-import org.apache.mahout.cf.taste.model.DataModel;
-import org.apache.mahout.cf.taste.recommender.Recommender;
-import scr.baseRecommender.AverageRatingTest;
-import scr.baseRecommender.PopularityTest;
-import scr.baseRecommender.RMTest;
-import scr.baseRecommender.generic.ItemBasedBaseRecommender;
 import scr.draw.XYChartCreator;
 import scr.draw.XYChartModel;
+import scr.save.GraphData;
+import scr.save.GraphItemData;
+import scr.save.XYChartDataSaver;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -46,11 +37,22 @@ public class XYChartTest {
         Iterator<String> iterator = tests.get(0).returnMap.keySet().iterator();
         while(iterator.hasNext()){
             String key=iterator.next();
-            dataSaver.saveData(tests,key,title);
             Map<String,Map<Double,Double>> map= new HashMap<>();
+            GraphData graphData= new GraphData();
+            graphData.title=title;
+            graphData.xAxisLabel="precision";
+            graphData.yAxisLabel=key;
+            List<GraphItemData> graphItemDataList= new ArrayList<>();
             for(AbstractTest test: tests){
                 map.put(test.displayName, test.returnMap.get(key));
+                GraphItemData graphItemData= new GraphItemData();
+                graphItemData.displayName=test.displayName;
+                graphItemData.xAxis= test.returnMap.get(key).keySet();
+                graphItemData.yAxis= test.returnMap.get(key).values();
+                graphItemDataList.add(graphItemData);
             }
+            graphData.graphItemDataList=graphItemDataList;
+            dataSaver.saveData(graphData);
             XYChartModel model=new XYChartModel();
             model.title=title;
             model.xAxisLabel="precision";
