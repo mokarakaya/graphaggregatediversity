@@ -29,15 +29,4 @@ public class XYChartDataSaver {
         return true;
     }
 
-    private int getLongestListSize(List<AbstractTest> tests, String key) {
-        int longestListSize=0;
-        for(AbstractTest test: tests){
-            if(test.returnMap.get(key).size()>longestListSize){
-                longestListSize=test.returnMap.get(key).size();
-            }
-        }
-        return longestListSize;
-    }
-
-
 }
