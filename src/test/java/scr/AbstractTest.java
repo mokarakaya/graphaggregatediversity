@@ -87,7 +87,7 @@ public abstract class AbstractTest  implements BaseRecommender,Runnable
 				};
 
 				RMRecommenderIRStatsEvaluator evaluator = new RMRecommenderIRStatsEvaluator();
-				RMIRStatistics evaluate = evaluator.evaluate(builder, null, dataModel, null, 20, 4.5, trainingPrefs, testPrefs);
+				RMIRStatistics evaluate = evaluator.evaluate(builder, null, dataModel, null, 10, 4.5, trainingPrefs, testPrefs);
 				final Map<String, BigDecimal> aggregateMap = evaluate.getAggregateMap();
 
 				if (returnMapInternal.get(AggregateEvaluator.AGGREGATE) == null) {
